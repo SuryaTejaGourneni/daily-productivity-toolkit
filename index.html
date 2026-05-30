@@ -1,0 +1,1979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SuryaTeja — Daily Toolkit</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0e0e0f;--bg2:#17171a;--bg3:#1f1f23;--bg4:#2a2a30;
+  --border:#2e2e35;--border2:#3d3d47;
+  --gold:#d4a847;--gold2:#f0c96a;--gold3:#7a5e1e;
+  --green:#3ecf8e;--green2:#1a6b47;
+  --blue:#4f9cf9;--blue2:#1a3d6b;
+  --red:#f06b6b;--red2:#6b1a1a;
+  --purple:#9b6dff;--purple2:#3d1a7a;
+  --text:#f0ede8;--text2:#9a9a9a;--text3:#5a5a5a;
+  --radius:10px;--radius2:6px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;min-height:100vh;overflow-x:hidden}
+
+/* ── SIDEBAR ── */
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:220px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100;padding:20px 0}
+.logo{padding:0 20px 24px;border-bottom:1px solid var(--border)}
+.logo-title{font-family:'Fraunces',serif;font-size:18px;color:var(--gold);line-height:1.2}
+.logo-sub{font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;margin-top:3px}
+.nav-section{padding:16px 12px 8px;font-size:10px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;font-family:'DM Mono',monospace}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 20px;cursor:pointer;transition:all .2s;border-left:2px solid transparent;color:var(--text2);font-size:13px}
+.nav-item:hover{color:var(--text);background:rgba(255,255,255,0.03)}
+.nav-item.active{color:var(--gold);border-left-color:var(--gold);background:rgba(212,168,71,0.06)}
+.nav-item .ni{font-size:16px;flex-shrink:0}
+.nav-badge{margin-left:auto;font-size:10px;background:var(--gold3);color:var(--gold2);padding:2px 7px;border-radius:20px;font-family:'DM Mono',monospace}
+.sidebar-footer{margin-top:auto;padding:16px 20px;border-top:1px solid var(--border);font-size:11px;color:var(--text3)}
+
+/* ── MAIN ── */
+.main{margin-left:220px;min-height:100vh;padding:0}
+.page{display:none;padding:32px 36px;min-height:100vh;animation:fadeIn .3s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── COMMON ── */
+.page-header{margin-bottom:28px}
+.page-title{font-family:'Fraunces',serif;font-size:28px;font-weight:600;color:var(--text);line-height:1.2}
+.page-sub{font-size:13px;color:var(--text2);margin-top:6px}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:16px}
+.card-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.card-title span{font-size:16px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+label{font-size:12px;color:var(--text2);display:block;margin-bottom:6px;font-family:'DM Mono',monospace}
+input,textarea,select{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius2);padding:10px 12px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;transition:border-color .2s;resize:vertical}
+input:focus,textarea:focus,select:focus{border-color:var(--gold)}
+select option{background:var(--bg3)}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:var(--radius2);border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;transition:all .2s}
+.btn-gold{background:var(--gold);color:#0e0e0f}
+.btn-gold:hover{background:var(--gold2)}
+.btn-outline{background:transparent;border:1px solid var(--border2);color:var(--text2)}
+.btn-outline:hover{border-color:var(--text2);color:var(--text)}
+.btn-green{background:var(--green2);color:var(--green)}
+.btn-green:hover{background:rgba(62,207,142,0.2)}
+.btn-red{background:var(--red2);color:var(--red)}
+.tag{display:inline-block;font-size:11px;padding:3px 9px;border-radius:20px;font-family:'DM Mono',monospace;margin:2px}
+.tag-gold{background:rgba(212,168,71,0.15);color:var(--gold)}
+.tag-green{background:rgba(62,207,142,0.12);color:var(--green)}
+.tag-blue{background:rgba(79,156,249,0.12);color:var(--blue)}
+.tag-red{background:rgba(240,107,107,0.12);color:var(--red)}
+.tag-purple{background:rgba(155,109,255,0.12);color:var(--purple)}
+.output-box{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius2);padding:16px;font-size:13px;line-height:1.8;color:var(--text);min-height:80px;white-space:pre-wrap;font-family:'DM Sans',sans-serif}
+.divider{height:1px;background:var(--border);margin:20px 0}
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.stat-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius2);padding:14px 16px;text-align:center}
+.stat-num{font-family:'Fraunces',serif;font-size:24px;color:var(--gold)}
+.stat-lbl{font-size:11px;color:var(--text3);margin-top:3px;font-family:'DM Mono',monospace}
+.progress{height:4px;background:var(--bg4);border-radius:2px;overflow:hidden;margin-top:8px}
+.progress-fill{height:100%;background:var(--gold);border-radius:2px;transition:width .4s}
+.chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.chip{padding:6px 14px;border-radius:20px;border:1px solid var(--border2);font-size:12px;cursor:pointer;transition:all .2s;color:var(--text2);background:transparent}
+.chip.active{border-color:var(--gold);color:var(--gold);background:rgba(212,168,71,0.08)}
+.chip:hover{border-color:var(--text2);color:var(--text)}
+.list-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
+.list-item:last-child{border-bottom:none}
+.dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.dot-gold{background:var(--gold)}
+.dot-green{background:var(--green)}
+.dot-red{background:var(--red)}
+.dot-blue{background:var(--blue)}
+textarea{min-height:100px}
+
+/* ── TIMER ── */
+.timer-display{font-family:'Fraunces',serif;font-size:72px;color:var(--gold);text-align:center;letter-spacing:-2px;line-height:1;padding:20px 0}
+.timer-label{text-align:center;font-size:12px;color:var(--text3);font-family:'DM Mono',monospace;margin-bottom:20px;text-transform:uppercase;letter-spacing:2px}
+.timer-ring{position:relative;width:200px;height:200px;margin:0 auto 20px}
+.timer-ring svg{transform:rotate(-90deg)}
+.timer-ring .ring-bg{fill:none;stroke:var(--bg4);stroke-width:8}
+.timer-ring .ring-fill{fill:none;stroke:var(--gold);stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset .5s linear}
+.timer-center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column}
+.timer-mins{font-family:'Fraunces',serif;font-size:42px;color:var(--gold)}
+.timer-secs-small{font-size:16px;color:var(--text3);font-family:'DM Mono',monospace}
+.timer-btns{display:flex;gap:10px;justify-content:center;margin-top:16px}
+
+/* ── FLASHCARD ── */
+.flashcard{background:var(--bg2);border:1px solid var(--border2);border-radius:12px;padding:28px;min-height:180px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;transition:transform .2s;position:relative;overflow:hidden}
+.flashcard:hover{transform:translateY(-2px)}
+.flashcard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--gold),var(--purple))}
+.fc-q{font-size:16px;font-weight:500;color:var(--text);line-height:1.5;margin-bottom:16px}
+.fc-a{font-size:13px;color:var(--text2);line-height:1.7;display:none}
+.fc-a.show{display:block}
+.fc-hint{font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;margin-top:12px}
+
+/* ── STAR BUILDER ── */
+.star-section{background:var(--bg3);border-left:3px solid var(--gold);padding:14px 16px;border-radius:0 var(--radius2) var(--radius2) 0;margin-bottom:12px}
+.star-letter{font-family:'Fraunces',serif;font-size:20px;color:var(--gold);margin-bottom:6px}
+.star-hint{font-size:11px;color:var(--text3);margin-bottom:8px;font-style:italic}
+
+/* ── JOB TRACKER ── */
+.job-row{display:grid;grid-template-columns:1fr 1.2fr .8fr .8fr .6fr auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);font-size:12px}
+.job-row-header{font-family:'DM Mono',monospace;color:var(--text3);font-size:11px}
+.status-pill{padding:3px 10px;border-radius:20px;font-size:11px;font-family:'DM Mono',monospace;white-space:nowrap}
+.status-applied{background:rgba(79,156,249,0.15);color:var(--blue)}
+.status-interview{background:rgba(212,168,71,0.15);color:var(--gold)}
+.status-offer{background:rgba(62,207,142,0.15);color:var(--green)}
+.status-rejected{background:rgba(240,107,107,0.15);color:var(--red)}
+.del-btn{background:none;border:none;color:var(--text3);cursor:pointer;font-size:16px;padding:2px 6px;border-radius:4px}
+.del-btn:hover{color:var(--red);background:var(--red2)}
+
+/* ── COVER LETTER ── */
+.template-chip{padding:8px 14px;border-radius:var(--radius2);border:1px solid var(--border);font-size:12px;cursor:pointer;transition:all .2s;color:var(--text2);background:var(--bg3);text-align:center}
+.template-chip.active{border-color:var(--gold);color:var(--gold);background:rgba(212,168,71,0.08)}
+
+/* ── POMODORO ── */
+.pomo-mode{display:flex;gap:8px;margin-bottom:20px;justify-content:center}
+.pomo-btn{padding:8px 20px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--text2);font-size:12px;cursor:pointer;transition:all .2s}
+.pomo-btn.active{background:var(--gold);color:#0e0e0f;border-color:var(--gold)}
+.pomo-log{max-height:200px;overflow-y:auto}
+.pomo-log-item{font-size:11px;color:var(--text3);padding:4px 0;border-bottom:1px solid var(--border);font-family:'DM Mono',monospace}
+
+/* ── NOTE ── */
+.note-tag-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.note-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius2);padding:14px;margin-bottom:10px;cursor:pointer;transition:border-color .2s}
+.note-card:hover{border-color:var(--border2)}
+.note-card-title{font-size:13px;font-weight:500;margin-bottom:4px}
+.note-card-preview{font-size:11px;color:var(--text3);line-height:1.5}
+.note-card-meta{font-size:10px;color:var(--text3);font-family:'DM Mono',monospace;margin-top:8px}
+
+/* ── READING ── */
+.book-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius2);padding:16px;display:flex;gap:14px;align-items:flex-start;margin-bottom:10px}
+.book-cover{width:48px;height:64px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.book-info{flex:1}
+.book-title{font-size:13px;font-weight:500;margin-bottom:3px}
+.book-author{font-size:11px;color:var(--text3);margin-bottom:8px}
+.book-progress{font-size:11px;color:var(--text2);margin-bottom:6px}
+
+/* ── SCROLL ── */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+
+/* ── MOBILE ── */
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%);transition:transform .3s}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0}
+  .page{padding:20px 16px}
+  .grid2,.grid3{grid-template-columns:1fr}
+  .stat-row{grid-template-columns:1fr 1fr}
+  .job-row{grid-template-columns:1fr 1fr auto}
+}
+</style>
+
+<!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, doc, setDoc, getDoc, collection, getDocs, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCn7i3Le8tMyMizRTXm-N9n4fTwrQWbiv8",
+    authDomain: "surya-toolkit.firebaseapp.com",
+    projectId: "surya-toolkit",
+    storageBucket: "surya-toolkit.firebasestorage.app",
+    messagingSenderId: "754506808433",
+    appId: "1:754506808433:web:460c1d21ed2e4375a76fd0",
+    measurementId: "G-5F370BW7L2"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  window._db = db;
+  window._fsModules = { doc, setDoc, getDoc, collection, getDocs, deleteDoc, onSnapshot };
+  window._firebaseReady = true;
+  window.dispatchEvent(new Event('firebase-ready'));
+</script>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+  <div class="logo">
+    <div class="logo-title">SuryaTeja<br>Toolkit</div>
+    <div class="logo-sub">// daily productivity suite</div>
+  </div>
+
+  <div class="nav-section">Job Search</div>
+  <div class="nav-item active" onclick="showPage('cover')">
+    <span class="ni">✉</span> Cover Letter Gen
+  </div>
+  <div class="nav-item" onclick="showPage('resume')">
+    <span class="ni">📄</span> Resume Tailor
+  </div>
+  <div class="nav-item" onclick="showPage('tracker')">
+    <span class="ni">🎯</span> Application Tracker
+  </div>
+  <div class="nav-item" onclick="showPage('linkedin')">
+    <span class="ni">🤝</span> LinkedIn Outreach
+  </div>
+
+  <div class="nav-section">Interview Prep</div>
+  <div class="nav-item" onclick="showPage('dsa')">
+    <span class="ni">⚡</span> DSA Timer
+  </div>
+  <div class="nav-item" onclick="showPage('star')">
+    <span class="ni">⭐</span> STAR Builder
+  </div>
+  <div class="nav-item" onclick="showPage('flashcards')">
+    <span class="ni">🃏</span> System Design Cards
+  </div>
+
+  <div class="nav-section">Focus & Study</div>
+  <div class="nav-item" onclick="showPage('pomodoro')">
+    <span class="ni">🍅</span> Pomodoro Timer
+  </div>
+  <div class="nav-item" onclick="showPage('notes')">
+    <span class="ni">📝</span> Study Notes
+  </div>
+  <div class="nav-item" onclick="showPage('reading')">
+    <span class="ni">📚</span> Reading Tracker
+  </div>
+
+  <div class="nav-section">Goals</div>
+  <div class="nav-item" onclick="showPage('daily')">
+    <span class="ni">✅</span> Daily Checklist
+  </div>
+
+  <div class="nav-section">Sync</div>
+  <div class="nav-item" onclick="showPage('sync')">
+    <span class="ni">🔄</span> Excel Sync
+    <span class="nav-badge">↔</span>
+  </div>
+
+  <div class="sidebar-footer">
+  v2.0 · May 2026<br>
+  <span id="sync-status" style="color:var(--text3);font-size:10px">&#9679; Connecting...</span>
+</div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+<!-- ═══ COVER LETTER GENERATOR ═══ -->
+<div class="page active" id="page-cover">
+  <div class="page-header">
+    <div class="page-title">Cover Letter Generator</div>
+    <div class="page-sub">Fill in the details — get a personalized, story-driven cover letter in seconds</div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="card-title"><span>🏢</span> Job Details</div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div><label>Company Name</label><input id="cl-company" placeholder="e.g. Nue.ai" /></div>
+          <div><label>Job Title</label><input id="cl-role" placeholder="e.g. Full Stack Java Developer" /></div>
+          <div><label>Key Skills from Job Description</label><textarea id="cl-skills" placeholder="e.g. Java, Spring Boot, React, AWS, microservices..." style="min-height:80px"></textarea></div>
+          <div><label>What excites you about this company?</label><textarea id="cl-why" placeholder="e.g. Their AI-driven approach to revenue operations..." style="min-height:70px"></textarea></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span>🎨</span> Tone</div>
+        <div class="chip-row" id="cl-tone-chips">
+          <div class="chip active" onclick="selectChip(this,'cl-tone-chips')">Story-driven</div>
+          <div class="chip" onclick="selectChip(this,'cl-tone-chips')">Confident</div>
+          <div class="chip" onclick="selectChip(this,'cl-tone-chips')">Concise</div>
+          <div class="chip" onclick="selectChip(this,'cl-tone-chips')">Technical</div>
+        </div>
+        <button class="btn btn-gold" style="width:100%" onclick="generateCoverLetter()">✦ Generate Cover Letter</button>
+      </div>
+    </div>
+    <div>
+      <div class="card" style="height:calc(100% - 0px)">
+        <div class="card-title" style="justify-content:space-between">
+          <span style="display:flex;align-items:center;gap:8px"><span>📋</span> Generated Letter</span>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-outline" style="padding:6px 12px;font-size:11px" onclick="copyCL()">Copy</button>
+            <button class="btn btn-outline" style="padding:6px 12px;font-size:11px" onclick="clearCL()">Clear</button>
+          </div>
+        </div>
+        <div class="output-box" id="cl-output" style="min-height:480px">Your cover letter will appear here...</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ RESUME TAILOR ═══ -->
+<div class="page" id="page-resume">
+  <div class="page-header">
+    <div class="page-title">Resume Tailor</div>
+    <div class="page-sub">Paste a job description — get tailored bullet points and keyword matches</div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="card-title"><span>📋</span> Job Description</div>
+        <textarea id="rt-jd" placeholder="Paste the full job description here..." style="min-height:220px"></textarea>
+        <div style="margin-top:12px">
+          <label>Target Role Type</label>
+          <div class="chip-row" id="rt-role-chips">
+            <div class="chip active" onclick="selectChip(this,'rt-role-chips')">Full Stack Java</div>
+            <div class="chip" onclick="selectChip(this,'rt-role-chips')">Data Analyst</div>
+            <div class="chip" onclick="selectChip(this,'rt-role-chips')">Python Developer</div>
+            <div class="chip" onclick="selectChip(this,'rt-role-chips')">Backend Engineer</div>
+          </div>
+        </div>
+        <button class="btn btn-gold" style="width:100%;margin-top:8px" onclick="tailorResume()">✦ Analyze & Tailor</button>
+      </div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:12px">
+        <div class="card-title"><span>🎯</span> Keyword Match</div>
+        <div id="rt-keywords">Run analysis to see keyword matches...</div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span>✏️</span> Suggested Bullet Points</div>
+        <div class="output-box" id="rt-bullets" style="min-height:240px">Tailored bullet points will appear here...</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ APPLICATION TRACKER ═══ -->
+<div class="page" id="page-tracker">
+  <div class="page-header">
+    <div class="page-title">Application Tracker</div>
+    <div class="page-sub">Log every application — never lose track of where you stand</div>
+  </div>
+
+  <div class="stat-row" id="tracker-stats">
+    <div class="stat-card"><div class="stat-num" id="ts-total">0</div><div class="stat-lbl">Applied</div></div>
+    <div class="stat-card"><div class="stat-num" id="ts-interview">0</div><div class="stat-lbl">Interviews</div></div>
+    <div class="stat-card"><div class="stat-num" id="ts-offer">0</div><div class="stat-lbl">Offers</div></div>
+    <div class="stat-card"><div class="stat-num" id="ts-rate">0%</div><div class="stat-lbl">Response Rate</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span>➕</span> Add Application</div>
+    <div class="grid3" style="margin-bottom:12px">
+      <div><label>Company</label><input id="app-company" placeholder="Company name" /></div>
+      <div><label>Role</label><input id="app-role" placeholder="Job title" /></div>
+      <div><label>Source</label>
+        <select id="app-source">
+          <option>LinkedIn</option><option>Indeed</option><option>Dice</option>
+          <option>Company Site</option><option>Referral</option><option>Recruiter</option>
+        </select>
+      </div>
+    </div>
+    <div class="grid3" style="margin-bottom:12px">
+      <div><label>Date Applied</label><input id="app-date" type="date" /></div>
+      <div><label>Status</label>
+        <select id="app-status">
+          <option>📤 Applied</option><option>📞 Phone Screen</option>
+          <option>💻 Tech Interview</option><option>🤝 Final Round</option>
+          <option>✅ Offer</option><option>❌ Rejected</option>
+        </select>
+      </div>
+      <div><label>Follow-up Date</label><input id="app-followup" type="date" /></div>
+    </div>
+    <button class="btn btn-gold" onclick="addApplication()">+ Add Application</button>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span>📋</span> All Applications</div>
+    <div class="job-row job-row-header" style="padding-bottom:8px">
+      <div>Company</div><div>Role</div><div>Date</div><div>Source</div><div>Status</div><div></div>
+    </div>
+    <div id="app-list">
+      <div style="color:var(--text3);font-size:12px;padding:20px 0;text-align:center">No applications yet. Add your first one above!</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ LINKEDIN OUTREACH ═══ -->
+<div class="page" id="page-linkedin">
+  <div class="page-header">
+    <div class="page-title">LinkedIn Outreach</div>
+    <div class="page-sub">Generate personalized connection messages and follow-ups</div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="card-title"><span>👤</span> Their Details</div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div><label>Their Name</label><input id="li-name" placeholder="e.g. Sarah Johnson" /></div>
+          <div><label>Their Role</label><input id="li-role" placeholder="e.g. Senior Recruiter at Google" /></div>
+          <div><label>Their Company</label><input id="li-company" placeholder="e.g. Google" /></div>
+          <div><label>Message Type</label>
+            <div class="chip-row" id="li-type-chips" style="margin-top:8px">
+              <div class="chip active" onclick="selectChip(this,'li-type-chips')">Connection Request</div>
+              <div class="chip" onclick="selectChip(this,'li-type-chips')">Follow Up</div>
+              <div class="chip" onclick="selectChip(this,'li-type-chips')">Referral Ask</div>
+              <div class="chip" onclick="selectChip(this,'li-type-chips')">Thank You</div>
+            </div>
+          </div>
+          <div><label>Job/Role to mention (optional)</label><input id="li-jobrole" placeholder="e.g. Full Stack Engineer opening" /></div>
+        </div>
+        <button class="btn btn-gold" style="width:100%;margin-top:14px" onclick="generateLinkedIn()">✦ Generate Message</button>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title" style="justify-content:space-between">
+          <span style="display:flex;align-items:center;gap:8px"><span>💬</span> Message</span>
+          <button class="btn btn-outline" style="padding:6px 12px;font-size:11px" onclick="copyLI()">Copy</button>
+        </div>
+        <div class="output-box" id="li-output" style="min-height:200px">Your personalized message will appear here...</div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span>📌</span> Quick Templates</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div class="list-item">
+            <div class="dot dot-gold" style="margin-top:4px"></div>
+            <div>
+              <div style="font-size:12px;font-weight:500;margin-bottom:3px">Opening Connection</div>
+              <div style="font-size:11px;color:var(--text3)">"Hi [Name], I came across your profile and noticed you work in [field]. I'm a Full Stack & Data Engineer actively exploring new opportunities — would love to connect!"</div>
+            </div>
+          </div>
+          <div class="list-item">
+            <div class="dot dot-blue" style="margin-top:4px"></div>
+            <div>
+              <div style="font-size:12px;font-weight:500;margin-bottom:3px">Recruiter Outreach</div>
+              <div style="font-size:11px;color:var(--text3)">"Hi [Name], I saw you're a recruiter at [Company]. I have 4+ years in Java/Python/Data Engineering and would love to learn about any open roles that might be a fit."</div>
+            </div>
+          </div>
+          <div class="list-item" style="border:none">
+            <div class="dot dot-green" style="margin-top:4px"></div>
+            <div>
+              <div style="font-size:12px;font-weight:500;margin-bottom:3px">Referral Request</div>
+              <div style="font-size:11px;color:var(--text3)">"Hi [Name], I noticed [Company] has an opening for [Role]. Your insights on the team culture would be invaluable. Would you be open to a brief chat?"</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ DSA TIMER ═══ -->
+<div class="page" id="page-dsa">
+  <div class="page-header">
+    <div class="page-title">DSA Problem Timer</div>
+    <div class="page-sub">Simulate real interview conditions — solve, track, review</div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card" style="text-align:center">
+        <div class="timer-ring">
+          <svg width="200" height="200" viewBox="0 0 200 200">
+            <circle class="ring-bg" cx="100" cy="100" r="88"/>
+            <circle class="ring-fill" id="dsa-ring" cx="100" cy="100" r="88" stroke-dasharray="553" stroke-dashoffset="0"/>
+          </svg>
+          <div class="timer-center">
+            <div class="timer-mins" id="dsa-display">25:00</div>
+            <div class="timer-secs-small" id="dsa-phase">Ready</div>
+          </div>
+        </div>
+        <div class="timer-btns">
+          <button class="btn btn-gold" id="dsa-start-btn" onclick="dsaToggle()">▶ Start</button>
+          <button class="btn btn-outline" onclick="dsaReset()">↺ Reset</button>
+        </div>
+        <div style="margin-top:16px">
+          <label>Problem difficulty</label>
+          <div class="chip-row" id="dsa-diff-chips" style="justify-content:center;margin-top:8px">
+            <div class="chip active" onclick="selectChip(this,'dsa-diff-chips');setDSATime(15)">Easy (15m)</div>
+            <div class="chip" onclick="selectChip(this,'dsa-diff-chips');setDSATime(25)">Medium (25m)</div>
+            <div class="chip" onclick="selectChip(this,'dsa-diff-chips');setDSATime(40)">Hard (40m)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title"><span>📝</span> Problem Log</div>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px">
+          <div><label>Problem Name</label><input id="dsa-prob" placeholder="e.g. Two Sum" /></div>
+          <div class="grid2" style="gap:10px">
+            <div><label>Difficulty</label>
+              <select id="dsa-level"><option>Easy</option><option>Medium</option><option>Hard</option></select>
+            </div>
+            <div><label>Platform</label>
+              <select id="dsa-platform"><option>LeetCode</option><option>HackerRank</option><option>Other</option></select>
+            </div>
+          </div>
+          <div><label>Outcome</label>
+            <div class="chip-row" id="dsa-out-chips">
+              <div class="chip active" onclick="selectChip(this,'dsa-out-chips')">✅ Solved</div>
+              <div class="chip" onclick="selectChip(this,'dsa-out-chips')">🔄 Partial</div>
+              <div class="chip" onclick="selectChip(this,'dsa-out-chips')">❌ Need review</div>
+            </div>
+          </div>
+          <div><label>Notes / approach</label><textarea id="dsa-notes" placeholder="Key insight, approach used..." style="min-height:70px"></textarea></div>
+        </div>
+        <button class="btn btn-gold" onclick="logDSA()" style="width:100%">Log Problem</button>
+      </div>
+      <div class="card">
+        <div class="card-title"><span>📊</span> Today's Problems</div>
+        <div id="dsa-log">
+          <div style="color:var(--text3);font-size:12px;text-align:center;padding:16px">No problems logged yet today</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ STAR BUILDER ═══ -->
+<div class="page" id="page-star">
+  <div class="page-header">
+    <div class="page-title">STAR Answer Builder</div>
+    <div class="page-sub">Structure your behavioral answers for any interview question</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span>❓</span> Common Questions — Pick or type your own</div>
+    <div class="chip-row" id="star-q-chips">
+      <div class="chip active" onclick="selectSTARQ(this,'Tell me about yourself')">Tell me about yourself</div>
+      <div class="chip" onclick="selectSTARQ(this,'Describe a challenging project')">Challenging project</div>
+      <div class="chip" onclick="selectSTARQ(this,'Tell me about a time you failed')">Time you failed</div>
+      <div class="chip" onclick="selectSTARQ(this,'How do you handle tight deadlines?')">Tight deadlines</div>
+      <div class="chip" onclick="selectSTARQ(this,'Describe working with a difficult team member')">Difficult team member</div>
+      <div class="chip" onclick="selectSTARQ(this,'Your greatest technical achievement')">Greatest achievement</div>
+    </div>
+    <input id="star-question" placeholder="Or type your own question..." style="margin-top:10px" />
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="star-section">
+        <div class="star-letter">S — Situation</div>
+        <div class="star-hint">Set the scene. When, where, what was the context?</div>
+        <textarea id="star-s" placeholder="e.g. At Dell Technologies in 2022, I was assigned to integrate our ERP and CRM systems which had been siloed for years..."></textarea>
+      </div>
+      <div class="star-section" style="border-left-color:var(--blue)">
+        <div class="star-letter" style="color:var(--blue)">T — Task</div>
+        <div class="star-hint">What was your specific responsibility?</div>
+        <textarea id="star-t" placeholder="e.g. My task was to design and build RESTful APIs that would allow real-time data sync between the two systems..."></textarea>
+      </div>
+    </div>
+    <div>
+      <div class="star-section" style="border-left-color:var(--green)">
+        <div class="star-letter" style="color:var(--green)">A — Action</div>
+        <div class="star-hint">Specifically what did YOU do? Use "I", not "we".</div>
+        <textarea id="star-a" placeholder="e.g. I architected a Spring Boot microservice with JAX-RS, built data transformation layers, and implemented error handling..."></textarea>
+      </div>
+      <div class="star-section" style="border-left-color:var(--purple)">
+        <div class="star-letter" style="color:var(--purple)">R — Result</div>
+        <div class="star-hint">Quantify the outcome. Numbers are powerful.</div>
+        <textarea id="star-r" placeholder="e.g. The integration reduced data entry time by 60%, eliminated duplicate records across 3 departments, and saved the team 20+ hours/week..."></textarea>
+      </div>
+    </div>
+  </div>
+  <div style="display:flex;gap:10px;margin-top:4px">
+    <button class="btn btn-gold" onclick="buildSTAR()">✦ Build Full Answer</button>
+    <button class="btn btn-outline" onclick="clearSTAR()">Clear</button>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <div class="card-title" style="justify-content:space-between">
+      <span style="display:flex;align-items:center;gap:8px"><span>🎤</span> Full Answer</span>
+      <button class="btn btn-outline" style="padding:6px 12px;font-size:11px" onclick="copySTAR()">Copy</button>
+    </div>
+    <div class="output-box" id="star-output" style="min-height:120px">Your structured answer will appear here...</div>
+  </div>
+</div>
+
+<!-- ═══ SYSTEM DESIGN FLASHCARDS ═══ -->
+<div class="page" id="page-flashcards">
+  <div class="page-header">
+    <div class="page-title">System Design Flashcards</div>
+    <div class="page-sub">Click a card to reveal the answer — swipe through topics</div>
+  </div>
+
+  <div style="display:flex;gap:10px;margin-bottom:20px;justify-content:space-between;align-items:center">
+    <div class="chip-row" id="fc-cat-chips" style="margin:0">
+      <div class="chip active" onclick="filterCards(this,'all')">All</div>
+      <div class="chip" onclick="filterCards(this,'arch')">Architecture</div>
+      <div class="chip" onclick="filterCards(this,'db')">Databases</div>
+      <div class="chip" onclick="filterCards(this,'api')">APIs</div>
+      <div class="chip" onclick="filterCards(this,'java')">Java/Spring</div>
+      <div class="chip" onclick="filterCards(this,'data')">Data Eng</div>
+    </div>
+    <div style="font-size:12px;color:var(--text3);font-family:'DM Mono',monospace" id="fc-count">20 cards</div>
+  </div>
+
+  <div id="fc-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:14px"></div>
+</div>
+
+<!-- ═══ POMODORO TIMER ═══ -->
+<div class="page" id="page-pomodoro">
+  <div class="page-header">
+    <div class="page-title">Pomodoro Timer</div>
+    <div class="page-sub">25 min focus · 5 min break · Stay in flow</div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card" style="text-align:center">
+        <div class="pomo-mode" id="pomo-modes">
+          <button class="pomo-btn active" onclick="setPomoMode(this,25,'Focus')">Focus 25m</button>
+          <button class="pomo-btn" onclick="setPomoMode(this,5,'Short Break')">Break 5m</button>
+          <button class="pomo-btn" onclick="setPomoMode(this,15,'Long Break')">Long 15m</button>
+        </div>
+        <div class="timer-ring">
+          <svg width="200" height="200" viewBox="0 0 200 200">
+            <circle class="ring-bg" cx="100" cy="100" r="88"/>
+            <circle class="ring-fill" id="pomo-ring" cx="100" cy="100" r="88" stroke-dasharray="553" stroke-dashoffset="0"/>
+          </svg>
+          <div class="timer-center">
+            <div class="timer-mins" id="pomo-display">25:00</div>
+            <div class="timer-secs-small" id="pomo-label">Focus</div>
+          </div>
+        </div>
+        <div class="timer-btns">
+          <button class="btn btn-gold" id="pomo-start-btn" onclick="pomoToggle()">▶ Start</button>
+          <button class="btn btn-outline" onclick="pomoReset()">↺ Reset</button>
+        </div>
+        <div style="margin-top:16px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap" id="pomo-dots"></div>
+        <div style="margin-top:10px;font-size:11px;color:var(--text3);font-family:'DM Mono',monospace" id="pomo-session-count">Sessions today: 0</div>
+      </div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:14px">
+        <div class="card-title"><span>📋</span> Current Task</div>
+        <input id="pomo-task" placeholder="What are you working on?" />
+        <div style="margin-top:10px">
+          <label>Category</label>
+          <div class="chip-row" id="pomo-cat-chips" style="margin-top:6px">
+            <div class="chip active" onclick="selectChip(this,'pomo-cat-chips')">🎯 Job Search</div>
+            <div class="chip" onclick="selectChip(this,'pomo-cat-chips')">📚 PhD</div>
+            <div class="chip" onclick="selectChip(this,'pomo-cat-chips')">💻 Coding</div>
+            <div class="chip" onclick="selectChip(this,'pomo-cat-chips')">📝 Prep</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span>📊</span> Session Log</div>
+        <div class="pomo-log" id="pomo-log">
+          <div style="color:var(--text3);font-size:12px;text-align:center;padding:16px">No sessions yet today</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ STUDY NOTES ═══ -->
+<div class="page" id="page-notes">
+  <div class="page-header">
+    <div class="page-title">Study Notes</div>
+    <div class="page-sub">Capture key insights from PhD coursework, system design, and interview prep</div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="card-title"><span>➕</span> New Note</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div><label>Title</label><input id="note-title" placeholder="Note title..." /></div>
+          <div><label>Category</label>
+            <select id="note-cat">
+              <option>📚 PhD / DBA</option>
+              <option>💻 System Design</option>
+              <option>⚡ DSA</option>
+              <option>🎤 Interview Prep</option>
+              <option>💼 Job Search</option>
+              <option>🧠 Personal</option>
+            </select>
+          </div>
+          <div><label>Content</label><textarea id="note-content" placeholder="Write your notes here..." style="min-height:160px"></textarea></div>
+          <div><label>Tags (comma separated)</label><input id="note-tags" placeholder="e.g. AI, machine learning, business" /></div>
+        </div>
+        <button class="btn btn-gold" style="width:100%;margin-top:12px" onclick="saveNote()">Save Note</button>
+      </div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:12px">
+        <div class="card-title"><span>🔍</span> Search Notes</div>
+        <input id="note-search" placeholder="Search by title or tag..." oninput="searchNotes()" />
+      </div>
+      <div id="notes-list">
+        <div style="color:var(--text3);font-size:12px;text-align:center;padding:20px">No notes yet. Create your first one!</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ READING TRACKER ═══ -->
+<div class="page" id="page-reading">
+  <div class="page-header">
+    <div class="page-title">Reading Tracker</div>
+    <div class="page-sub">Track your 12-books-a-year goal · 20 min daily reading habit</div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card"><div class="stat-num" id="books-read">0</div><div class="stat-lbl">Books Read</div></div>
+    <div class="stat-card"><div class="stat-num" id="books-goal">12</div><div class="stat-lbl">Year Goal</div></div>
+    <div class="stat-card"><div class="stat-num" id="books-pct">0%</div><div class="stat-lbl">Progress</div></div>
+    <div class="stat-card"><div class="stat-num" id="books-left">12</div><div class="stat-lbl">Remaining</div></div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="card-title"><span>📖</span> Add Book</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div><label>Book Title</label><input id="book-title" placeholder="e.g. Atomic Habits" /></div>
+          <div><label>Author</label><input id="book-author" placeholder="e.g. James Clear" /></div>
+          <div><label>Category</label>
+            <select id="book-cat">
+              <option>📚 Non-fiction</option>
+              <option>💼 Business</option>
+              <option>🧠 Self-development</option>
+              <option>💻 Technical</option>
+              <option>🎭 Fiction</option>
+              <option>🔬 Research / Academic</option>
+            </select>
+          </div>
+          <div><label>Pages</label><input id="book-pages" type="number" placeholder="Total pages" /></div>
+          <div><label>Status</label>
+            <div class="chip-row" id="book-status-chips">
+              <div class="chip active" onclick="selectChip(this,'book-status-chips')">📖 Reading</div>
+              <div class="chip" onclick="selectChip(this,'book-status-chips')">✅ Finished</div>
+              <div class="chip" onclick="selectChip(this,'book-status-chips')">📌 To Read</div>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-gold" style="width:100%;margin-top:12px" onclick="addBook()">Add Book</button>
+      </div>
+    </div>
+    <div id="books-list">
+      <div style="color:var(--text3);font-size:12px;text-align:center;padding:20px">No books tracked yet. Add your first one!</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ DAILY CHECKLIST ═══ -->
+<div class="page" id="page-daily">
+  <div class="page-header">
+    <div class="page-title">Daily Checklist</div>
+    <div class="page-sub">Tuesday, May 26, 2026 — your non-negotiables for today</div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card"><div class="stat-num" id="dc-done">0</div><div class="stat-lbl">Done</div></div>
+    <div class="stat-card"><div class="stat-num" id="dc-left">0</div><div class="stat-lbl">Remaining</div></div>
+    <div class="stat-card"><div class="stat-num" id="dc-pct">0%</div><div class="stat-lbl">Complete</div></div>
+    <div class="stat-card"><div class="stat-num" id="dc-streak">0🔥</div><div class="stat-lbl">Day Streak</div></div>
+  </div>
+
+  <div id="dc-sections"></div>
+
+  <div class="card" style="margin-top:8px">
+    <div class="card-title"><span>🏆</span> Daily Wins</div>
+    <textarea id="dc-wins" placeholder="What did you accomplish today? (Fill in at end of day)" style="min-height:80px"></textarea>
+    <button class="btn btn-green" style="margin-top:10px" onclick="saveDailyWins()">Save Wins</button>
+  </div>
+</div>
+
+
+<!-- ═══ EXCEL SYNC ═══ -->
+<div class="page" id="page-sync">
+  <div class="page-header">
+    <div class="page-title">Excel Sync</div>
+    <div class="page-sub">Two-way sync between this toolkit and your SuryaTeja_Daily_Planner.xlsx</div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card"><div class="stat-num" id="sync-apps">0</div><div class="stat-lbl">Applications</div></div>
+    <div class="stat-card"><div class="stat-num" id="sync-pomo">0</div><div class="stat-lbl">Pomo Sessions</div></div>
+    <div class="stat-card"><div class="stat-num" id="sync-dsa">0</div><div class="stat-lbl">DSA Problems</div></div>
+    <div class="stat-card"><div class="stat-num" id="sync-days">0</div><div class="stat-lbl">Days Tracked</div></div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="card-title"><span>📤</span> Export to Excel</div>
+        <p style="font-size:13px;color:var(--text2);line-height:1.8;margin-bottom:16px">
+          Exports all your toolkit data into <strong style="color:var(--gold)">SuryaTeja_Daily_Planner.xlsx</strong>:<br>
+          • Job applications → 🎯 Job Search sheet<br>
+          • Pomodoro sessions → 📱 Toolkit Sync sheet<br>
+          • DSA problems → 📱 Toolkit Sync sheet<br>
+          • Daily checklist history → 📱 Toolkit Sync sheet
+        </p>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px">
+          <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:13px;color:var(--text)">
+            <input type="checkbox" id="exp-apps" checked style="width:auto"> Job Applications
+          </label>
+          <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:13px;color:var(--text)">
+            <input type="checkbox" id="exp-pomo" checked style="width:auto"> Pomodoro Sessions
+          </label>
+          <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:13px;color:var(--text)">
+            <input type="checkbox" id="exp-dsa" checked style="width:auto"> DSA Problems
+          </label>
+          <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:13px;color:var(--text)">
+            <input type="checkbox" id="exp-dc" checked style="width:auto"> Daily Checklist History
+          </label>
+        </div>
+        <button class="btn btn-gold" style="width:100%" onclick="exportToExcel()">
+          📤 Export & Download Excel
+        </button>
+        <div id="export-status" style="margin-top:10px;font-size:12px;color:var(--green);font-family:DM Mono,monospace;min-height:20px"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span>📋</span> Export as CSV</div>
+        <p style="font-size:13px;color:var(--text2);margin-bottom:14px">Download individual data as CSV files for manual import into Excel</p>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <button class="btn btn-outline" style="justify-content:flex-start;gap:10px" onclick="exportCSV('apps')">
+            🎯 Download Applications CSV
+          </button>
+          <button class="btn btn-outline" style="justify-content:flex-start;gap:10px" onclick="exportCSV('pomo')">
+            🍅 Download Pomodoro Sessions CSV
+          </button>
+          <button class="btn btn-outline" style="justify-content:flex-start;gap:10px" onclick="exportCSV('dsa')">
+            ⚡ Download DSA Problems CSV
+          </button>
+          <button class="btn btn-outline" style="justify-content:flex-start;gap:10px" onclick="exportCSV('dc')">
+            ✅ Download Checklist History CSV
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="card">
+        <div class="card-title"><span>📥</span> Import from Excel / CSV</div>
+        <p style="font-size:13px;color:var(--text2);line-height:1.8;margin-bottom:16px">
+          Upload a previously exported CSV to restore data into the toolkit. Drop the file you downloaded earlier.
+        </p>
+        <div id="drop-zone" style="border:2px dashed var(--border2);border-radius:var(--radius);padding:32px;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:14px"
+          ondrop="handleDrop(event)" ondragover="event.preventDefault();this.style.borderColor='var(--gold)'"
+          ondragleave="this.style.borderColor='var(--border2)'" onclick="document.getElementById('file-input').click()">
+          <div style="font-size:24px;margin-bottom:8px">📁</div>
+          <div style="font-size:13px;color:var(--text2)">Drag & drop CSV file here</div>
+          <div style="font-size:11px;color:var(--text3);margin-top:4px">or click to browse</div>
+        </div>
+        <input type="file" id="file-input" accept=".csv" style="display:none" onchange="handleFileInput(event)">
+        <div id="import-status" style="font-size:12px;color:var(--green);font-family:DM Mono,monospace;min-height:20px"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span>📊</span> Sync History</div>
+        <div id="sync-history">
+          <div style="color:var(--text3);font-size:12px;text-align:center;padding:16px">No syncs yet</div>
+        </div>
+        <div class="divider"></div>
+        <div style="display:flex;gap:8px;justify-content:space-between;align-items:center">
+          <span style="font-size:11px;color:var(--text3);font-family:DM Mono,monospace">Last sync: <span id="last-sync-time">Never</span></span>
+          <button class="btn btn-outline" style="padding:6px 12px;font-size:11px" onclick="clearSyncHistory()">Clear History</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span>📖</span> How to sync</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div class="list-item">
+            <div class="dot dot-gold" style="margin-top:4px"></div>
+            <div style="font-size:12px;color:var(--text2)"><strong style="color:var(--text)">Export:</strong> Click "Export & Download Excel" — opens your updated planner with all toolkit data filled in</div>
+          </div>
+          <div class="list-item">
+            <div class="dot dot-blue" style="margin-top:4px"></div>
+            <div style="font-size:12px;color:var(--text2)"><strong style="color:var(--text)">Import:</strong> Export a CSV first, make edits in Excel, then drag the CSV back here to re-import</div>
+          </div>
+          <div class="list-item">
+            <div class="dot dot-green" style="margin-top:4px"></div>
+            <div style="font-size:12px;color:var(--text2)"><strong style="color:var(--text)">Auto-save:</strong> All toolkit data auto-saves in your browser — it persists between sessions without syncing</div>
+          </div>
+          <div class="list-item" style="border:none">
+            <div class="dot dot-gold" style="margin-top:4px"></div>
+            <div style="font-size:12px;color:var(--text2)"><strong style="color:var(--text)">Tip:</strong> Export weekly every Sunday to keep your Excel planner up to date with all activity</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end .main -->
+
+<script>
+// ── NAVIGATION ──
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+// ── CHIP SELECTOR ──
+function selectChip(el, groupId) {
+  document.querySelectorAll('#'+groupId+' .chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function getActiveChip(groupId) {
+  var el = document.querySelector('#'+groupId+' .chip.active');
+  return el ? el.textContent.trim() : '';
+}
+
+// ── LOCAL STORAGE HELPERS (Fallback) ──
+function save(key, val) {
+  try { localStorage.setItem('stk_'+key, JSON.stringify(val)); } catch(e){}
+  // Also sync to Firebase if ready
+  if (window._firebaseReady && window._db) {
+    var db = window._db;
+    var m = window._fsModules;
+    m.setDoc(m.doc(db, 'toolkit', key), { value: JSON.stringify(val), updated: Date.now() })
+      .catch(function(e){ console.warn('Firebase save failed:', e); });
+  }
+}
+
+function load(key, def) {
+  try { var v = localStorage.getItem('stk_'+key); return v ? JSON.parse(v) : def; } catch(e){ return def; }
+}
+
+// Load from Firebase and sync to localStorage
+function loadFromFirebase(key, def, callback) {
+  if (!window._firebaseReady || !window._db) { callback(load(key, def)); return; }
+  var db = window._db;
+  var m = window._fsModules;
+  m.getDoc(m.doc(db, 'toolkit', key)).then(function(snap) {
+    if (snap.exists()) {
+      try {
+        var val = JSON.parse(snap.data().value);
+        localStorage.setItem('stk_'+key, JSON.stringify(val));
+        callback(val);
+      } catch(e) { callback(def); }
+    } else { callback(def); }
+  }).catch(function() { callback(load(key, def)); });
+}
+
+// Sync all Firebase data to localStorage on load
+function syncFromFirebase(onDone) {
+  if (!window._firebaseReady || !window._db) { if(onDone) onDone(); return; }
+  var db = window._db;
+  var m = window._fsModules;
+  m.getDocs(m.collection(db, 'toolkit')).then(function(snap) {
+    var count = 0;
+    snap.forEach(function(docSnap) {
+      try {
+        var val = JSON.parse(docSnap.data().value);
+        localStorage.setItem('stk_'+docSnap.id, JSON.stringify(val));
+        count++;
+      } catch(e){}
+    });
+    console.log('Synced', count, 'keys from Firebase');
+    if(onDone) onDone();
+  }).catch(function(e) {
+    console.warn('Firebase sync failed:', e);
+    if(onDone) onDone();
+  });
+}
+
+// ══════════════════════════════════════
+//  COVER LETTER GENERATOR
+// ══════════════════════════════════════
+function generateCoverLetter() {
+  var company = document.getElementById('cl-company').value.trim() || '[Company]';
+  var role = document.getElementById('cl-role').value.trim() || '[Role]';
+  var skills = document.getElementById('cl-skills').value.trim() || 'Java, Python, Spring Boot';
+  var why = document.getElementById('cl-why').value.trim();
+  var tone = getActiveChip('cl-tone-chips');
+
+  var output = document.getElementById('cl-output');
+  output.textContent = 'Generating...';
+
+  setTimeout(function() {
+    var whyLine = why ? why : 'your reputation for building innovative, high-impact technology solutions';
+    var toneIntro = tone === 'Concise' ? 'I am writing to express my interest' :
+                    tone === 'Technical' ? 'With 4+ years of hands-on experience building enterprise systems' :
+                    'Every great system starts with a problem worth solving';
+
+    var letter = `Dear Hiring Manager at ${company},
+
+${toneIntro} in the ${role} position at ${company}. What drew me to this opportunity is ${whyLine}.
+
+Over the past 4+ years, I've built production-grade systems at Dell Technologies and Sabre Corporation — from designing Spring Boot microservices and RESTful APIs that eliminated data silos across departments, to building real-time data pipelines using Python and PySpark on Azure that transformed raw event streams into actionable intelligence.
+
+The skills you're looking for — ${skills} — are technologies I've worked with daily in enterprise environments. At Dell, I architected full stack applications using Java, Spring Boot, React.js, Docker, and Kubernetes that handled thousands of daily transactions. At Sabre, I built Python-driven ETL pipelines and Plotly/Dash dashboards that gave clients real-time visibility into financial data.
+
+What I bring beyond the technical skills is ownership. I don't just build features — I think through systems holistically, ask the right questions early, and deliver solutions that scale. I'm currently pursuing a DBA at Belhaven University focused on AI and ML in business, which means I'm constantly connecting technical work to business outcomes.
+
+I'd love the opportunity to bring this combination of full stack depth and data engineering experience to ${company}. I'm happy to walk through specific projects or do a technical discussion at your convenience.
+
+Thank you for your time and consideration.
+
+Warm regards,
+SuryaTeja Gourneni
+suryatejagourneni@gmail.com · 469-456-3005
+github.com/SuryaTejaGourneni · suryatejagourneni.github.io`;
+
+    output.textContent = letter;
+  }, 600);
+}
+
+function copyCL() {
+  var text = document.getElementById('cl-output').textContent;
+  navigator.clipboard.writeText(text).then(function(){ showToast('Copied!'); });
+}
+function clearCL() { document.getElementById('cl-output').textContent = 'Your cover letter will appear here...'; }
+
+// ══════════════════════════════════════
+//  RESUME TAILOR
+// ══════════════════════════════════════
+var myKeywords = ['java','spring boot','spring','python','react','angular','javascript','sql','rest','api','microservices','docker','kubernetes','aws','azure','kafka','spark','pyspark','pandas','hibernate','jpa','jenkins','ci/cd','mongodb','postgresql','mysql','snowflake','node.js','fastapi','flask','git','agile','scrum','full stack','backend','frontend','data engineering','etl','pipeline','machine learning','ml'];
+
+function tailorResume() {
+  var jd = document.getElementById('rt-jd').value.toLowerCase();
+  if (!jd.trim()) { return; }
+
+  var found = [], missing = [];
+  myKeywords.forEach(function(kw) {
+    if (jd.includes(kw.toLowerCase())) found.push(kw);
+  });
+
+  var additionalKeywords = ['typescript','graphql','redis','elasticsearch','terraform','microservice','cloud','devops','tdd','junit','selenium','postman','jira','maven','gradle'];
+  additionalKeywords.forEach(function(kw) {
+    if (jd.includes(kw) && !found.includes(kw)) missing.push(kw);
+  });
+
+  var kwHtml = '<div style="margin-bottom:10px"><div style="font-size:11px;color:var(--text3);margin-bottom:6px;font-family:DM Mono,monospace">MATCHED (' + found.length + ')</div>';
+  kwHtml += '<div>' + found.map(function(k){ return '<span class="tag tag-green">✓ '+k+'</span>'; }).join('') + '</div></div>';
+  if (missing.length) {
+    kwHtml += '<div><div style="font-size:11px;color:var(--text3);margin-bottom:6px;font-family:DM Mono,monospace">CONSIDER ADDING</div>';
+    kwHtml += '<div>' + missing.map(function(k){ return '<span class="tag tag-gold">+ '+k+'</span>'; }).join('') + '</div></div>';
+  }
+  document.getElementById('rt-keywords').innerHTML = kwHtml;
+
+  var role = getActiveChip('rt-role-chips');
+  var bullets = '';
+
+  if (role.includes('Data')) {
+    bullets = `• Designed and deployed end-to-end ETL pipelines using Python and PySpark on Azure, integrating data from multiple market providers and reducing processing time by 40%
+
+• Built interactive analytics dashboards using Plotly, Dash, and Flask, providing real-time visibility into financial market trends for enterprise clients
+
+• Applied Scikit-Learn ML algorithms for anomaly detection and predictive analytics on time-series financial data with 95%+ accuracy
+
+• Automated data ingestion workflows using Python, Unix shell scripting, and Autosys, eliminating manual intervention and saving 15+ hours/week
+
+• Designed REST APIs to dynamically extend data models with new analytics modules, improving system extensibility and reducing onboarding time for new issuers`;
+  } else if (role.includes('Python')) {
+    bullets = `• Developed production Python applications processing 100K+ daily transactions using Pandas, NumPy, and SQLAlchemy with full data validation
+
+• Built RESTful microservices with FastAPI and Flask, implementing Pydantic validation and Docker containerization to reduce deployment time by 80%
+
+• Engineered real-time streaming pipelines integrating third-party APIs with robust error handling, rate limiting, and fault-tolerant execution
+
+• Applied PySpark and Spark SQL for large-scale data transformation on Azure, optimizing query performance by 60%
+
+• Automated reporting workflows using Python scripts and Autosys batch processes, eliminating manual data entry across 3 departments`;
+  } else {
+    bullets = `• Architected full stack enterprise applications using Java 1.8, Spring Boot, React.js, and Angular.js following MVC and J2EE design patterns, serving 10K+ daily users
+
+• Designed and implemented RESTful APIs with Spring MVC and JAX-RS, handling JSON/XML payloads and reducing system integration time by 50%
+
+• Built and deployed containerized microservices using Docker and Kubernetes, improving application fault tolerance and reducing downtime by 35%
+
+• Configured Spring Security (SSO), Spring Cloud Config, and Spring JMS for enterprise-grade authentication and distributed messaging
+
+• Managed CI/CD pipelines with Jenkins integrated with Docker/Kubernetes, cutting deployment cycles from days to under 2 hours`;
+  }
+
+  document.getElementById('rt-bullets').textContent = bullets;
+}
+
+// ══════════════════════════════════════
+//  APPLICATION TRACKER
+// ══════════════════════════════════════
+var applications = load('apps', []);
+
+function addApplication() {
+  var company = document.getElementById('app-company').value.trim();
+  var role = document.getElementById('app-role').value.trim();
+  if (!company || !role) { showToast('Company and role required'); return; }
+
+  var app = {
+    id: Date.now(),
+    company: company,
+    role: role,
+    source: document.getElementById('app-source').value,
+    date: document.getElementById('app-date').value || new Date().toISOString().split('T')[0],
+    status: document.getElementById('app-status').value,
+    followup: document.getElementById('app-followup').value
+  };
+
+  applications.unshift(app);
+  save('apps', applications);
+  renderApplications();
+  document.getElementById('app-company').value = '';
+  document.getElementById('app-role').value = '';
+  showToast('Application added!');
+}
+
+function deleteApp(id) {
+  applications = applications.filter(function(a){ return a.id !== id; });
+  save('apps', applications);
+  renderApplications();
+}
+
+function renderApplications() {
+  var list = document.getElementById('app-list');
+  if (!applications.length) {
+    list.innerHTML = '<div style="color:var(--text3);font-size:12px;padding:20px 0;text-align:center">No applications yet.</div>';
+    updateTrackerStats();
+    return;
+  }
+  list.innerHTML = applications.map(function(a) {
+    var sc = a.status.includes('Offer') ? 'status-offer' : a.status.includes('Interview') || a.status.includes('Screen') || a.status.includes('Round') ? 'status-interview' : a.status.includes('Rejected') ? 'status-rejected' : 'status-applied';
+    return '<div class="job-row">'
+      + '<div style="font-weight:500;font-size:12px">'+a.company+'</div>'
+      + '<div style="color:var(--text2);font-size:12px">'+a.role+'</div>'
+      + '<div style="color:var(--text3);font-size:11px;font-family:DM Mono,monospace">'+a.date+'</div>'
+      + '<div style="color:var(--text3);font-size:11px">'+a.source+'</div>'
+      + '<div><span class="status-pill '+sc+'">'+a.status+'</span></div>'
+      + '<button class="del-btn" onclick="deleteApp('+a.id+')">×</button>'
+      + '</div>';
+  }).join('');
+  updateTrackerStats();
+}
+
+function updateTrackerStats() {
+  var total = applications.length;
+  var interviews = applications.filter(function(a){ return a.status.includes('Interview') || a.status.includes('Screen') || a.status.includes('Round'); }).length;
+  var offers = applications.filter(function(a){ return a.status.includes('Offer'); }).length;
+  var rate = total ? Math.round((interviews + offers) / total * 100) : 0;
+  document.getElementById('ts-total').textContent = total;
+  document.getElementById('ts-interview').textContent = interviews;
+  document.getElementById('ts-offer').textContent = offers;
+  document.getElementById('ts-rate').textContent = rate + '%';
+}
+
+// ══════════════════════════════════════
+//  LINKEDIN OUTREACH
+// ══════════════════════════════════════
+function generateLinkedIn() {
+  var name = document.getElementById('li-name').value.trim() || '[Name]';
+  var role = document.getElementById('li-role').value.trim() || 'recruiter';
+  var company = document.getElementById('li-company').value.trim() || '[Company]';
+  var type = getActiveChip('li-type-chips');
+  var jobrole = document.getElementById('li-jobrole').value.trim();
+
+  var msg = '';
+  if (type.includes('Connection')) {
+    msg = `Hi ${name},\n\nI came across your profile and noticed you're a ${role}${company !== '[Company]' ? ' at ' + company : ''}. I'm a Full Stack Java Developer and Data Engineer with 4+ years of experience — currently open to new opportunities in software engineering and data roles.\n\nI'd love to connect and explore if there might be a fit. Looking forward to staying in touch!\n\nBest,\nSuryaTeja Gourneni`;
+  } else if (type.includes('Follow')) {
+    msg = `Hi ${name},\n\nI wanted to follow up on my recent application${jobrole ? ' for the ' + jobrole + ' role' : ''} at ${company}. I'm very excited about this opportunity and believe my background in Java, Python, Spring Boot, and data engineering aligns well with what you're looking for.\n\nPlease let me know if you need any additional information. I'd love the chance to discuss further!\n\nBest regards,\nSuryaTeja Gourneni\n469-456-3005`;
+  } else if (type.includes('Referral')) {
+    msg = `Hi ${name},\n\nI hope you're doing well! I noticed ${company} has an opening${jobrole ? ' for ' + jobrole : ''} and I'm very interested. Your experience there makes your perspective invaluable.\n\nI have 4+ years in full stack Java development and data engineering, and I'd love to learn more about the team culture and whether my background might be a good fit.\n\nWould you be open to a brief 10-minute chat? I'd really appreciate it!\n\nThanks so much,\nSuryaTeja Gourneni`;
+  } else {
+    msg = `Hi ${name},\n\nThank you so much for taking the time to speak with me${jobrole ? ' about the ' + jobrole + ' role' : ''}. I really enjoyed our conversation and learning more about ${company}.\n\nIt reinforced my excitement about the opportunity, and I'm confident my experience with Java, Spring Boot, Python, and data engineering would add real value to your team.\n\nLooking forward to next steps!\n\nWarm regards,\nSuryaTeja Gourneni`;
+  }
+
+  document.getElementById('li-output').textContent = msg;
+}
+
+function copyLI() {
+  navigator.clipboard.writeText(document.getElementById('li-output').textContent).then(function(){ showToast('Copied!'); });
+}
+
+// ══════════════════════════════════════
+//  DSA TIMER
+// ══════════════════════════════════════
+var dsaTimer = null, dsaRunning = false, dsaTotalSecs = 25*60, dsaRemaining = 25*60;
+var dsaProblems = load('dsa_problems', []);
+
+function setDSATime(mins) {
+  if (dsaRunning) return;
+  dsaTotalSecs = mins * 60;
+  dsaRemaining = dsaTotalSecs;
+  updateDSADisplay();
+}
+
+function dsaToggle() {
+  if (dsaRunning) {
+    clearInterval(dsaTimer);
+    dsaRunning = false;
+    document.getElementById('dsa-start-btn').textContent = '▶ Resume';
+  } else {
+    dsaRunning = true;
+    document.getElementById('dsa-start-btn').textContent = '⏸ Pause';
+    dsaTimer = setInterval(function() {
+      if (dsaRemaining <= 0) {
+        clearInterval(dsaTimer);
+        dsaRunning = false;
+        document.getElementById('dsa-start-btn').textContent = '▶ Start';
+        document.getElementById('dsa-phase').textContent = '⏰ Time\'s up!';
+        return;
+      }
+      dsaRemaining--;
+      updateDSADisplay();
+    }, 1000);
+  }
+}
+
+function dsaReset() {
+  clearInterval(dsaTimer);
+  dsaRunning = false;
+  dsaRemaining = dsaTotalSecs;
+  document.getElementById('dsa-start-btn').textContent = '▶ Start';
+  document.getElementById('dsa-phase').textContent = 'Ready';
+  updateDSADisplay();
+}
+
+function updateDSADisplay() {
+  var m = Math.floor(dsaRemaining/60), s = dsaRemaining%60;
+  document.getElementById('dsa-display').textContent = (m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+  var pct = dsaRemaining / dsaTotalSecs;
+  var circ = 553;
+  document.getElementById('dsa-ring').style.strokeDashoffset = circ * (1 - pct);
+}
+
+function logDSA() {
+  var prob = document.getElementById('dsa-prob').value.trim();
+  if (!prob) { showToast('Enter problem name'); return; }
+  var entry = {
+    name: prob,
+    level: document.getElementById('dsa-level').value,
+    platform: document.getElementById('dsa-platform').value,
+    outcome: getActiveChip('dsa-out-chips'),
+    notes: document.getElementById('dsa-notes').value.trim(),
+    time: new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})
+  };
+  dsaProblems.unshift(entry);
+  save('dsa_problems', dsaProblems);
+  renderDSALog();
+  document.getElementById('dsa-prob').value = '';
+  document.getElementById('dsa-notes').value = '';
+  showToast('Problem logged!');
+}
+
+function renderDSALog() {
+  var log = document.getElementById('dsa-log');
+  if (!dsaProblems.length) {
+    log.innerHTML = '<div style="color:var(--text3);font-size:12px;text-align:center;padding:16px">No problems logged yet today</div>';
+    return;
+  }
+  log.innerHTML = dsaProblems.slice(0,8).map(function(p) {
+    var oc = p.outcome.includes('✅') ? 'tag-green' : p.outcome.includes('🔄') ? 'tag-gold' : 'tag-red';
+    return '<div class="list-item">'
+      + '<div class="dot '+(p.level==='Easy'?'dot-green':p.level==='Medium'?'dot-gold':'dot-red')+'" style="margin-top:5px"></div>'
+      + '<div style="flex:1"><div style="font-size:12px;font-weight:500">'+p.name+'</div>'
+      + '<div style="display:flex;gap:6px;margin-top:3px"><span class="tag '+oc+'" style="font-size:10px">'+p.outcome+'</span>'
+      + '<span class="tag tag-blue" style="font-size:10px">'+p.platform+'</span>'
+      + '<span style="font-size:10px;color:var(--text3);font-family:DM Mono,monospace">'+p.time+'</span></div></div></div>';
+  }).join('');
+}
+
+// ══════════════════════════════════════
+//  STAR BUILDER
+// ══════════════════════════════════════
+function selectSTARQ(el, q) {
+  document.querySelectorAll('#star-q-chips .chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('star-question').value = q;
+}
+
+function buildSTAR() {
+  var q = document.getElementById('star-question').value.trim() || 'behavioral question';
+  var s = document.getElementById('star-s').value.trim();
+  var t = document.getElementById('star-t').value.trim();
+  var a = document.getElementById('star-a').value.trim();
+  var r = document.getElementById('star-r').value.trim();
+
+  if (!s && !t && !a && !r) { showToast('Fill in at least one section'); return; }
+
+  var out = 'Q: ' + q + '\n\n';
+  if (s) out += 'SITUATION:\n' + s + '\n\n';
+  if (t) out += 'TASK:\n' + t + '\n\n';
+  if (a) out += 'ACTION:\n' + a + '\n\n';
+  if (r) out += 'RESULT:\n' + r;
+
+  document.getElementById('star-output').textContent = out;
+}
+
+function clearSTAR() {
+  ['star-s','star-t','star-a','star-r','star-question','star-output'].forEach(function(id){
+    var el = document.getElementById(id);
+    if (el.tagName === 'TEXTAREA' || el.tagName === 'INPUT') el.value = '';
+    else el.textContent = 'Your structured answer will appear here...';
+  });
+}
+
+function copySTAR() {
+  navigator.clipboard.writeText(document.getElementById('star-output').textContent).then(function(){ showToast('Copied!'); });
+}
+
+// ══════════════════════════════════════
+//  SYSTEM DESIGN FLASHCARDS
+// ══════════════════════════════════════
+var allCards = [
+  {cat:'arch', q:'What is a microservices architecture?', a:'An approach where an application is built as small, independent services each running in its own process and communicating via APIs. Each service handles a specific business function and can be deployed independently. Key benefits: scalability, fault isolation, technology flexibility.'},
+  {cat:'arch', q:'Explain CAP theorem', a:'A distributed system can guarantee only 2 of 3: Consistency (all nodes see same data), Availability (every request gets a response), Partition Tolerance (system works despite network failures). Since partitions are unavoidable, systems choose CP (strong consistency) or AP (high availability).'},
+  {cat:'arch', q:'What is the difference between horizontal and vertical scaling?', a:'Vertical scaling (scale up): add more CPU/RAM to existing server. Horizontal scaling (scale out): add more servers. Horizontal is preferred for distributed systems — more resilient, no single point of failure, and scales to massive loads.'},
+  {cat:'arch', q:'What is a load balancer and why use it?', a:'Distributes incoming traffic across multiple servers. Benefits: no single point of failure, better throughput, horizontal scaling support. Types: Round Robin, Least Connections, IP Hash. Examples: Nginx, AWS ALB.'},
+  {cat:'db', q:'SQL vs NoSQL — when to use each?', a:'SQL: structured data, ACID transactions, complex queries, relationships (e.g. PostgreSQL, MySQL). NoSQL: flexible schema, horizontal scaling, high-speed reads/writes, unstructured data (e.g. MongoDB for documents, Cassandra for time-series, Redis for cache).'},
+  {cat:'db', q:'What is database indexing and how does it work?', a:'An index is a data structure (typically B-Tree) that improves query speed at the cost of storage and write performance. Use on columns frequently used in WHERE, JOIN, ORDER BY. Too many indexes slow writes. Composite indexes follow leftmost prefix rule.'},
+  {cat:'db', q:'Explain ACID properties', a:'Atomicity: all or nothing. Consistency: valid state before and after. Isolation: concurrent transactions don\'t interfere. Durability: committed data persists. Critical for financial systems. NoSQL often trades ACID for performance (BASE model).'},
+  {cat:'db', q:'What is database sharding?', a:'Horizontal partitioning — splitting data across multiple databases (shards) based on a shard key. Improves performance and scalability. Challenges: cross-shard queries are complex, rebalancing is hard, joins across shards don\'t work natively.'},
+  {cat:'api', q:'REST vs GraphQL vs gRPC — differences?', a:'REST: stateless, resource-based, uses HTTP verbs. Simple and widely supported. GraphQL: client specifies exactly what data it needs, single endpoint, reduces over/under-fetching. gRPC: binary protocol (Protocol Buffers), faster, strongly typed, ideal for internal microservice communication.'},
+  {cat:'api', q:'What are HTTP status codes you must know?', a:'200 OK, 201 Created, 204 No Content. 301 Redirect, 304 Not Modified. 400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found, 409 Conflict, 422 Unprocessable. 500 Server Error, 502 Bad Gateway, 503 Service Unavailable.'},
+  {cat:'api', q:'What is JWT and how does it work?', a:'JSON Web Token: a signed, base64-encoded token with Header.Payload.Signature. Server signs with secret key, client sends in Authorization header. Stateless — no DB lookup needed. Risk: tokens can\'t be revoked before expiry. Use short expiry + refresh tokens.'},
+  {cat:'api', q:'What is idempotency in APIs?', a:'An operation is idempotent if calling it multiple times has the same effect as calling once. GET, PUT, DELETE are idempotent. POST typically is not. Critical for payment APIs — retrying a failed request shouldn\'t double-charge. Implement with idempotency keys.'},
+  {cat:'java', q:'What is the difference between Spring @Component, @Service, @Repository?', a:'All are Spring-managed beans but semantically different. @Component: generic. @Service: business logic layer. @Repository: data access layer — also adds exception translation. Use the right one for clarity and AOP targeting.'},
+  {cat:'java', q:'Explain Spring Boot auto-configuration', a:'Spring Boot scans classpath, detects libraries (e.g. if JDBC is present, configures DataSource), and applies sensible defaults. Uses @ConditionalOnClass, @ConditionalOnMissingBean. Override with application.properties or your own @Configuration beans.'},
+  {cat:'java', q:'What is the difference between @RestController and @Controller?', a:'@Controller returns view names (for MVC/Thymeleaf). @RestController = @Controller + @ResponseBody on every method — returns data directly (JSON/XML). Use @RestController for APIs, @Controller for server-side rendered apps.'},
+  {cat:'java', q:'How does Hibernate lazy loading work?', a:'Entities/collections are only loaded from DB when accessed, not at initial query. Reduces N+1 query issues. Must be accessed within an open Hibernate Session — accessing outside throws LazyInitializationException. Use @Transactional or fetch joins to handle this.'},
+  {cat:'data', q:'What is Apache Kafka and when should you use it?', a:'Distributed event streaming platform. Use when: high-throughput real-time data, decoupling producers/consumers, event sourcing, log aggregation. Kafka persists messages (unlike queues). Key concepts: topics, partitions, consumer groups, offsets.'},
+  {cat:'data', q:'Explain ETL vs ELT', a:'ETL (Extract Transform Load): transform data before loading into warehouse. Good for complex transformations, legacy systems. ELT (Extract Load Transform): load raw data first, transform in warehouse. Better for modern cloud DWs (Snowflake, BigQuery) that can handle transforms at scale.'},
+  {cat:'data', q:'What is a data pipeline?', a:'A series of data processing steps — ingestion → transformation → storage → serving. Tools: Apache Spark/PySpark for processing, Airflow for orchestration, Kafka for streaming, dbt for transformation. Key metrics: latency, throughput, data quality, fault tolerance.'},
+  {cat:'data', q:'What is the difference between batch and stream processing?', a:'Batch: processes accumulated data at intervals (hourly, daily). Lower complexity, higher latency. Good for reports. Stream: processes data in real-time as it arrives. Higher complexity, near-zero latency. Good for fraud detection, dashboards. Tools: Spark (batch), Kafka Streams/Flink (stream).'},
+];
+
+function filterCards(el, cat) {
+  document.querySelectorAll('#fc-cat-chips .chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  renderCards(cat);
+}
+
+function renderCards(cat) {
+  var filtered = cat === 'all' ? allCards : allCards.filter(function(c){ return c.cat === cat; });
+  document.getElementById('fc-count').textContent = filtered.length + ' cards';
+  document.getElementById('fc-grid').innerHTML = filtered.map(function(card, i) {
+    return '<div class="flashcard" onclick="toggleCard(this)">'
+      + '<div class="fc-q">'+card.q+'</div>'
+      + '<div class="fc-a" id="fca-'+i+'">'+card.a+'</div>'
+      + '<div class="fc-hint">Click to reveal answer</div></div>';
+  }).join('');
+}
+
+function toggleCard(el) {
+  var ans = el.querySelector('.fc-a');
+  var hint = el.querySelector('.fc-hint');
+  ans.classList.toggle('show');
+  hint.textContent = ans.classList.contains('show') ? 'Click to hide' : 'Click to reveal answer';
+}
+
+// ══════════════════════════════════════
+//  POMODORO TIMER
+// ══════════════════════════════════════
+var pomoTimer = null, pomoRunning = false, pomoTotalSecs = 25*60, pomoRemaining = 25*60;
+var pomoSessions = load('pomo_sessions', []);
+var pomoMode = 'Focus';
+
+function setPomoMode(el, mins, label) {
+  document.querySelectorAll('.pomo-btn').forEach(function(b){ b.classList.remove('active'); });
+  el.classList.add('active');
+  if (pomoRunning) { clearInterval(pomoTimer); pomoRunning = false; document.getElementById('pomo-start-btn').textContent = '▶ Start'; }
+  pomoTotalSecs = mins * 60;
+  pomoRemaining = pomoTotalSecs;
+  pomoMode = label;
+  document.getElementById('pomo-label').textContent = label;
+  updatePomoDisplay();
+}
+
+function pomoToggle() {
+  if (pomoRunning) {
+    clearInterval(pomoTimer);
+    pomoRunning = false;
+    document.getElementById('pomo-start-btn').textContent = '▶ Resume';
+  } else {
+    pomoRunning = true;
+    document.getElementById('pomo-start-btn').textContent = '⏸ Pause';
+    pomoTimer = setInterval(function() {
+      if (pomoRemaining <= 0) {
+        clearInterval(pomoTimer);
+        pomoRunning = false;
+        document.getElementById('pomo-start-btn').textContent = '▶ Start';
+        if (pomoMode === 'Focus') {
+          logPomoSession();
+          showToast('🍅 Focus session complete!');
+        } else {
+          showToast('☕ Break over — back to work!');
+        }
+        return;
+      }
+      pomoRemaining--;
+      updatePomoDisplay();
+    }, 1000);
+  }
+}
+
+function pomoReset() {
+  clearInterval(pomoTimer);
+  pomoRunning = false;
+  pomoRemaining = pomoTotalSecs;
+  document.getElementById('pomo-start-btn').textContent = '▶ Start';
+  updatePomoDisplay();
+}
+
+function logPomoSession() {
+  var task = document.getElementById('pomo-task').value.trim() || 'Focus session';
+  var cat = getActiveChip('pomo-cat-chips');
+  var session = { task: task, cat: cat, time: new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}), mins: Math.round(pomoTotalSecs/60) };
+  pomoSessions.unshift(session);
+  save('pomo_sessions', pomoSessions);
+  renderPomoLog();
+  updatePomoDots();
+}
+
+function renderPomoLog() {
+  var log = document.getElementById('pomo-log');
+  var todaySessions = pomoSessions.slice(0, 10);
+  if (!todaySessions.length) {
+    log.innerHTML = '<div style="color:var(--text3);font-size:12px;text-align:center;padding:16px">No sessions yet today</div>';
+    return;
+  }
+  log.innerHTML = todaySessions.map(function(s) {
+    return '<div class="pomo-log-item">'+s.time+' · '+s.mins+'m · '+s.cat+' · '+s.task+'</div>';
+  }).join('');
+  document.getElementById('pomo-session-count').textContent = 'Sessions today: ' + todaySessions.length;
+}
+
+function updatePomoDots() {
+  var count = Math.min(pomoSessions.length, 8);
+  var dots = '';
+  for (var i = 0; i < 8; i++) {
+    dots += '<div style="width:10px;height:10px;border-radius:50%;background:'+(i < count ? 'var(--gold)' : 'var(--bg4)')+'"></div>';
+  }
+  document.getElementById('pomo-dots').innerHTML = dots;
+}
+
+function updatePomoDisplay() {
+  var m = Math.floor(pomoRemaining/60), s = pomoRemaining%60;
+  document.getElementById('pomo-display').textContent = (m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+  var pct = pomoRemaining / pomoTotalSecs;
+  document.getElementById('pomo-ring').style.strokeDashoffset = 553 * (1 - pct);
+}
+
+// ══════════════════════════════════════
+//  STUDY NOTES
+// ══════════════════════════════════════
+var notes = load('notes', []);
+
+function saveNote() {
+  var title = document.getElementById('note-title').value.trim();
+  var content = document.getElementById('note-content').value.trim();
+  if (!title || !content) { showToast('Title and content required'); return; }
+
+  var note = {
+    id: Date.now(),
+    title: title,
+    cat: document.getElementById('note-cat').value,
+    content: content,
+    tags: document.getElementById('note-tags').value.split(',').map(function(t){ return t.trim(); }).filter(Boolean),
+    date: new Date().toLocaleDateString()
+  };
+  notes.unshift(note);
+  save('notes', notes);
+  renderNotes(notes);
+  document.getElementById('note-title').value = '';
+  document.getElementById('note-content').value = '';
+  document.getElementById('note-tags').value = '';
+  showToast('Note saved!');
+}
+
+function searchNotes() {
+  var q = document.getElementById('note-search').value.toLowerCase();
+  var filtered = notes.filter(function(n){ return n.title.toLowerCase().includes(q) || n.tags.some(function(t){ return t.toLowerCase().includes(q); }); });
+  renderNotes(filtered);
+}
+
+function renderNotes(list) {
+  var el = document.getElementById('notes-list');
+  if (!list.length) {
+    el.innerHTML = '<div style="color:var(--text3);font-size:12px;text-align:center;padding:20px">No notes found</div>';
+    return;
+  }
+  el.innerHTML = list.map(function(n) {
+    return '<div class="note-card" onclick="viewNote('+n.id+')">'
+      + '<div class="note-card-title">'+n.title+'</div>'
+      + '<div style="font-size:10px;color:var(--gold);margin-bottom:4px">'+n.cat+'</div>'
+      + '<div class="note-card-preview">'+n.content.substring(0,100)+(n.content.length > 100 ? '...' : '')+'</div>'
+      + '<div class="note-tag-list">'+n.tags.map(function(t){ return '<span class="tag tag-blue" style="font-size:10px">'+t+'</span>'; }).join('')+'</div>'
+      + '<div class="note-card-meta">'+n.date+'</div>'
+      + '</div>';
+  }).join('');
+}
+
+function viewNote(id) {
+  var note = notes.find(function(n){ return n.id === id; });
+  if (!note) return;
+  document.getElementById('note-title').value = note.title;
+  document.getElementById('note-content').value = note.content;
+  document.getElementById('note-tags').value = note.tags.join(', ');
+}
+
+// ══════════════════════════════════════
+//  READING TRACKER
+// ══════════════════════════════════════
+var books = load('books', []);
+var bookEmojis = {'📚 Non-fiction':'📚','💼 Business':'💼','🧠 Self-development':'🧠','💻 Technical':'💻','🎭 Fiction':'🎭','🔬 Research / Academic':'🔬'};
+var bookColors = {'📚 Non-fiction':'#1a3d6b','💼 Business':'#3d1a7a','🧠 Self-development':'#1a6b47','💻 Technical':'#6b1a1a','🎭 Fiction':'#5e3a1a','🔬 Research / Academic':'#1a3d3d'};
+
+function addBook() {
+  var title = document.getElementById('book-title').value.trim();
+  var author = document.getElementById('book-author').value.trim();
+  if (!title) { showToast('Book title required'); return; }
+
+  var book = {
+    id: Date.now(),
+    title: title,
+    author: author || 'Unknown',
+    cat: document.getElementById('book-cat').value,
+    pages: parseInt(document.getElementById('book-pages').value) || 0,
+    status: getActiveChip('book-status-chips'),
+    progress: 0,
+    date: new Date().toLocaleDateString()
+  };
+  books.unshift(book);
+  save('books', books);
+  renderBooks();
+  document.getElementById('book-title').value = '';
+  document.getElementById('book-author').value = '';
+  document.getElementById('book-pages').value = '';
+  showToast('Book added!');
+}
+
+function updateBookProgress(id, val) {
+  var book = books.find(function(b){ return b.id === id; });
+  if (book) { book.progress = parseInt(val); save('books', books); renderBookStats(); }
+}
+
+function renderBooks() {
+  var list = document.getElementById('books-list');
+  if (!books.length) {
+    list.innerHTML = '<div style="color:var(--text3);font-size:12px;text-align:center;padding:20px">No books yet</div>';
+    renderBookStats();
+    return;
+  }
+  list.innerHTML = books.map(function(b) {
+    var emoji = (bookEmojis[b.cat] || '📖');
+    var color = bookColors[b.cat] || '#1a1a2e';
+    var sc = b.status.includes('Finished') ? 'tag-green' : b.status.includes('Reading') ? 'tag-gold' : 'tag-blue';
+    return '<div class="book-card">'
+      + '<div class="book-cover" style="background:'+color+'">'+emoji+'</div>'
+      + '<div class="book-info">'
+      + '<div class="book-title">'+b.title+'</div>'
+      + '<div class="book-author">'+b.author+' · '+b.cat+'</div>'
+      + '<span class="tag '+sc+'" style="font-size:10px">'+b.status+'</span>'
+      + (b.pages ? '<div class="book-progress" style="margin-top:6px">Page: <input type="number" min="0" max="'+b.pages+'" value="'+b.progress+'" onchange="updateBookProgress('+b.id+',this.value)" style="width:60px;display:inline;padding:3px 6px;font-size:11px"> / '+b.pages+'</div>' : '')
+      + (b.pages ? '<div class="progress" style="margin-top:4px"><div class="progress-fill" style="width:'+Math.round(b.progress/b.pages*100)+'%"></div></div>' : '')
+      + '</div></div>';
+  }).join('');
+  renderBookStats();
+}
+
+function renderBookStats() {
+  var finished = books.filter(function(b){ return b.status.includes('Finished'); }).length;
+  var pct = Math.round(finished / 12 * 100);
+  document.getElementById('books-read').textContent = finished;
+  document.getElementById('books-pct').textContent = pct + '%';
+  document.getElementById('books-left').textContent = Math.max(0, 12 - finished);
+}
+
+// ══════════════════════════════════════
+//  DAILY CHECKLIST
+// ══════════════════════════════════════
+var dcState = load('dc_state_' + new Date().toDateString(), {});
+var dcSections = [
+  { label:'🌅 Morning', tasks:['Wake up at 7:30 AM','Morning routine & freshen up','Review goals & plan the day','No phone first 30 min'] },
+  { label:'🎯 Job Search', tasks:['Apply to 3–5 roles (LinkedIn, Indeed, Dice)','Tailor resume to job descriptions','Send 5–10 LinkedIn connection requests','Follow up on old applications','Check email 2x for recruiter responses','Update job search tracker sheet'] },
+  { label:'💻 Coding & Projects', tasks:['Work on GitHub project (1+ hrs)','Commit & push code to GitHub','Practice 2–3 LeetCode / DSA problems'] },
+  { label:'📚 PhD & Study', tasks:['PhD coursework — study (1 hr)','PhD reading & research (1 hr)'] },
+  { label:'🏃 Habits', tasks:['Drink 8 glasses of water','Exercise / workout (30 min)','Walk 10,000 steps','Healthy meal','Read 20 min (non-work)','Gratitude practice (3 items)'] },
+  { label:'🌙 End of Day', tasks:['Fill Daily Wins in planner','Mark task statuses in planner','Mark habits in Habit Tracker','Write Tomorrow\'s Top 3','Sleep by 11:30 PM'] },
+];
+
+function renderDC() {
+  var container = document.getElementById('dc-sections');
+  var total = 0, done = 0;
+  container.innerHTML = '';
+
+  dcSections.forEach(function(sec) {
+    var sDiv = document.createElement('div');
+    sDiv.className = 'card';
+    sDiv.style.marginBottom = '12px';
+
+    var secDone = sec.tasks.filter(function(t){ return dcState[t]; }).length;
+    total += sec.tasks.length; done += secDone;
+
+    var pct = Math.round(secDone / sec.tasks.length * 100);
+    sDiv.innerHTML = '<div class="card-title" style="justify-content:space-between"><span>'+sec.label+'</span><span style="font-size:11px;color:var(--text3);font-family:DM Mono,monospace">'+secDone+'/'+sec.tasks.length+'</span></div>'
+      + '<div class="progress" style="margin-bottom:12px"><div class="progress-fill" style="width:'+pct+'%"></div></div>'
+      + sec.tasks.map(function(task) {
+          var checked = !!dcState[task];
+          return '<div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);cursor:pointer" onclick="toggleDC(\''+task.replace(/'/g,"\\'")+'\')">'
+            + '<div style="width:18px;height:18px;border-radius:4px;border:1.5px solid '+(checked?'var(--green)':'var(--border2)')+';background:'+(checked?'var(--green2)':'transparent')+';display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px">'+(checked?'✓':'')+'</div>'
+            + '<span style="font-size:13px;color:var(--text);'+(checked?'text-decoration:line-through;opacity:0.5;':'')+'">'+task+'</span>'
+            + '</div>';
+        }).join('');
+    container.appendChild(sDiv);
+  });
+
+  var pct = total ? Math.round(done / total * 100) : 0;
+  document.getElementById('dc-done').textContent = done;
+  document.getElementById('dc-left').textContent = total - done;
+  document.getElementById('dc-pct').textContent = pct + '%';
+  document.getElementById('dc-streak').textContent = load('streak', 0) + '🔥';
+}
+
+function toggleDC(task) {
+  dcState[task] = !dcState[task];
+  save('dc_state_' + new Date().toDateString(), dcState);
+  renderDC();
+}
+
+function saveDailyWins() {
+  var wins = document.getElementById('dc-wins').value.trim();
+  if (wins) { save('wins_' + new Date().toDateString(), wins); showToast('Wins saved! 🏆'); }
+}
+
+// ══════════════════════════════════════
+//  TOAST
+// ══════════════════════════════════════
+function showToast(msg) {
+  var t = document.createElement('div');
+  t.textContent = msg;
+  t.style.cssText = 'position:fixed;bottom:24px;right:24px;background:var(--gold);color:#0e0e0f;padding:10px 18px;border-radius:6px;font-size:13px;font-weight:500;z-index:9999;animation:fadeIn .3s ease';
+  document.body.appendChild(t);
+  setTimeout(function(){ t.remove(); }, 2000);
+}
+
+
+
+// ══════════════════════════════════════
+//  EXCEL SYNC — EXPORT & IMPORT
+// ══════════════════════════════════════
+var syncHistory = load('sync_history', []);
+
+function updateSyncStats() {
+  var apps = load('apps', []);
+  var pomo = load('pomo_sessions', []);
+  var dsa = load('dsa_problems', []);
+  var dcDays = Object.keys(localStorage).filter(function(k){ return k.startsWith('stk_dc_state_'); }).length;
+  document.getElementById('sync-apps').textContent = apps.length;
+  document.getElementById('sync-pomo').textContent = pomo.length;
+  document.getElementById('sync-dsa').textContent = dsa.length;
+  document.getElementById('sync-days').textContent = dcDays;
+}
+
+function exportCSV(type) {
+  var data = [], filename = '', headers = [];
+
+  if (type === 'apps') {
+    var apps = load('apps', []);
+    headers = ['Company','Role','Source','Date Applied','Status','Follow-up Date'];
+    data = apps.map(function(a){ return [a.company, a.role, a.source, a.date, a.status, a.followup||'']; });
+    filename = 'applications_' + new Date().toISOString().split('T')[0] + '.csv';
+  } else if (type === 'pomo') {
+    var pomo = load('pomo_sessions', []);
+    headers = ['Date','Time','Task','Category','Duration (min)','Completed'];
+    data = pomo.map(function(s){ return [new Date().toLocaleDateString(), s.time, s.task, s.cat, s.mins, 'Yes']; });
+    filename = 'pomodoro_sessions_' + new Date().toISOString().split('T')[0] + '.csv';
+  } else if (type === 'dsa') {
+    var dsa = load('dsa_problems', []);
+    headers = ['Date','Time','Problem Name','Platform','Difficulty','Outcome','Notes'];
+    data = dsa.map(function(p){ return [new Date().toLocaleDateString(), p.time, p.name, p.platform, p.level, p.outcome, p.notes||'']; });
+    filename = 'dsa_problems_' + new Date().toISOString().split('T')[0] + '.csv';
+  } else if (type === 'dc') {
+    headers = ['Date','Total Tasks','Done','% Complete','Daily Wins'];
+    data = [];
+    Object.keys(localStorage).filter(function(k){ return k.startsWith('stk_dc_state_'); }).forEach(function(k) {
+      var dateStr = k.replace('stk_dc_state_', '');
+      var state = load('dc_state_' + dateStr, {});
+      var total = Object.keys(state).length;
+      var done = Object.values(state).filter(Boolean).length;
+      var wins = load('wins_' + dateStr, '');
+      data.push([dateStr, total, done, total ? Math.round(done/total*100)+'%' : '0%', wins]);
+    });
+    filename = 'checklist_history_' + new Date().toISOString().split('T')[0] + '.csv';
+  }
+
+  var csv = [headers.join(',')].concat(data.map(function(row){
+    return row.map(function(cell){ return '"'+(cell||'').toString().replace(/"/g,'""')+'"'; }).join(',');
+  })).join('\n');
+
+  downloadFile(csv, filename, 'text/csv');
+  logSync('Export', type, data.length + ' rows exported as CSV');
+  showToast('Downloaded ' + filename);
+}
+
+function exportToExcel() {
+  var expApps = document.getElementById('exp-apps').checked;
+  var expPomo = document.getElementById('exp-pomo').checked;
+  var expDsa = document.getElementById('exp-dsa').checked;
+  var expDc = document.getElementById('exp-dc').checked;
+
+  var status = document.getElementById('export-status');
+  status.textContent = '⏳ Building Excel file...';
+  status.style.color = 'var(--gold)';
+
+  // Build a comprehensive CSV that mimics the Excel structure
+  var lines = [];
+  var count = 0;
+
+  if (expApps) {
+    var apps = load('apps', []);
+    lines.push('=== JOB APPLICATIONS ===');
+    lines.push('Company,Role,Source,Date Applied,Status,Follow-up Date');
+    apps.forEach(function(a) {
+      lines.push([a.company,a.role,a.source,a.date,a.status,a.followup||''].map(function(v){ return '"'+v+'"'; }).join(','));
+      count++;
+    });
+    lines.push('');
+  }
+
+  if (expPomo) {
+    var pomo = load('pomo_sessions', []);
+    lines.push('=== POMODORO SESSIONS ===');
+    lines.push('Date,Time,Task,Category,Duration (min)');
+    pomo.forEach(function(s) {
+      lines.push([new Date().toLocaleDateString(),s.time,s.task,s.cat,s.mins].map(function(v){ return '"'+v+'"'; }).join(','));
+      count++;
+    });
+    lines.push('');
+  }
+
+  if (expDsa) {
+    var dsa = load('dsa_problems', []);
+    lines.push('=== DSA PROBLEMS ===');
+    lines.push('Date,Time,Problem,Platform,Difficulty,Outcome,Notes');
+    dsa.forEach(function(p) {
+      lines.push([new Date().toLocaleDateString(),p.time,p.name,p.platform,p.level,p.outcome,p.notes||''].map(function(v){ return '"'+v+'"'; }).join(','));
+      count++;
+    });
+    lines.push('');
+  }
+
+  if (expDc) {
+    lines.push('=== DAILY CHECKLIST HISTORY ===');
+    lines.push('Date,Total Tasks,Done,% Complete,Daily Wins');
+    Object.keys(localStorage).filter(function(k){ return k.startsWith('stk_dc_state_'); }).forEach(function(k) {
+      var dateStr = k.replace('stk_dc_state_', '');
+      var state = load('dc_state_' + dateStr, {});
+      var total = Object.keys(state).length;
+      var done = Object.values(state).filter(Boolean).length;
+      var wins = load('wins_' + dateStr, '');
+      lines.push([dateStr,total,done,total ? Math.round(done/total*100)+'%' : '0%',wins].map(function(v){ return '"'+v+'"'; }).join(','));
+      count++;
+    });
+  }
+
+  var filename = 'SuryaTeja_Toolkit_Export_' + new Date().toISOString().split('T')[0] + '.csv';
+  downloadFile(lines.join('\n'), filename, 'text/csv');
+
+  logSync('Full Export', 'all', count + ' total records exported');
+  status.textContent = '✅ Exported ' + count + ' records — import this CSV into your Excel planner';
+  status.style.color = 'var(--green)';
+
+  var lastSync = document.getElementById('last-sync-time');
+  if (lastSync) lastSync.textContent = new Date().toLocaleTimeString();
+
+  showToast('Export complete! ' + count + ' records');
+}
+
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('drop-zone').style.borderColor = 'var(--border2)';
+  var file = e.dataTransfer.files[0];
+  if (file) processImportFile(file);
+}
+
+function handleFileInput(e) {
+  var file = e.target.files[0];
+  if (file) processImportFile(file);
+}
+
+function processImportFile(file) {
+  var status = document.getElementById('import-status');
+  status.textContent = '⏳ Reading ' + file.name + '...';
+  status.style.color = 'var(--gold)';
+
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var csv = e.target.result;
+    var imported = { apps: 0, pomo: 0, dsa: 0, dc: 0 };
+    var currentSection = null;
+
+    var lines = csv.split('\n').map(function(l){ return l.trim(); }).filter(Boolean);
+    var appsData = [], pomoData = [], dsaData = [], dcData = [];
+
+    lines.forEach(function(line) {
+      if (line.includes('JOB APPLICATIONS')) { currentSection = 'apps'; return; }
+      if (line.includes('POMODORO SESSIONS')) { currentSection = 'pomo'; return; }
+      if (line.includes('DSA PROBLEMS')) { currentSection = 'dsa'; return; }
+      if (line.includes('DAILY CHECKLIST')) { currentSection = 'dc'; return; }
+      if (line.startsWith('Company,') || line.startsWith('Date,') || line.startsWith('=')) return;
+
+      var cols = parseCSVLine(line);
+      if (!cols.length || !cols[0]) return;
+
+      if (currentSection === 'apps' && cols.length >= 5) {
+        appsData.push({ id: Date.now() + Math.random(), company: cols[0], role: cols[1], source: cols[2], date: cols[3], status: cols[4], followup: cols[5]||'' });
+        imported.apps++;
+      } else if (currentSection === 'pomo' && cols.length >= 4) {
+        pomoData.push({ time: cols[1], task: cols[2], cat: cols[3], mins: parseInt(cols[4])||25 });
+        imported.pomo++;
+      } else if (currentSection === 'dsa' && cols.length >= 5) {
+        dsaData.push({ time: cols[1], name: cols[2], platform: cols[3], level: cols[4], outcome: cols[5]||'', notes: cols[6]||'' });
+        imported.dsa++;
+      } else if (currentSection === 'dc' && cols.length >= 3) {
+        imported.dc++;
+      }
+    });
+
+    // Merge imported data (avoid duplicates by company+role for apps)
+    if (appsData.length) {
+      var existing = load('apps', []);
+      var existingKeys = existing.map(function(a){ return a.company+'|'+a.role; });
+      var newApps = appsData.filter(function(a){ return !existingKeys.includes(a.company+'|'+a.role); });
+      save('apps', newApps.concat(existing));
+      renderApplications();
+    }
+    if (pomoData.length) {
+      var existingPomo = load('pomo_sessions', []);
+      save('pomo_sessions', pomoData.concat(existingPomo));
+    }
+    if (dsaData.length) {
+      var existingDsa = load('dsa_problems', []);
+      save('dsa_problems', dsaData.concat(existingDsa));
+      renderDSALog();
+    }
+
+    var total = imported.apps + imported.pomo + imported.dsa + imported.dc;
+    logSync('Import', file.name, total + ' records imported');
+    status.textContent = '✅ Imported: ' + imported.apps + ' apps · ' + imported.pomo + ' pomo · ' + imported.dsa + ' DSA · ' + imported.dc + ' days';
+    status.style.color = 'var(--green)';
+    updateSyncStats();
+    showToast('Import complete! ' + total + ' records loaded');
+  };
+  reader.readAsText(file);
+}
+
+function parseCSVLine(line) {
+  var result = [], current = '', inQuotes = false;
+  for (var i = 0; i < line.length; i++) {
+    if (line[i] === '"') { inQuotes = !inQuotes; }
+    else if (line[i] === ',' && !inQuotes) { result.push(current.trim()); current = ''; }
+    else { current += line[i]; }
+  }
+  result.push(current.trim());
+  return result;
+}
+
+function downloadFile(content, filename, mimeType) {
+  var blob = new Blob([content], { type: mimeType });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function logSync(type, source, detail) {
+  syncHistory.unshift({
+    type: type, source: source, detail: detail,
+    time: new Date().toLocaleString()
+  });
+  syncHistory = syncHistory.slice(0, 20);
+  save('sync_history', syncHistory);
+  renderSyncHistory();
+}
+
+function renderSyncHistory() {
+  var el = document.getElementById('sync-history');
+  if (!el) return;
+  if (!syncHistory.length) {
+    el.innerHTML = '<div style="color:var(--text3);font-size:12px;text-align:center;padding:16px">No syncs yet</div>';
+    return;
+  }
+  el.innerHTML = syncHistory.slice(0,6).map(function(s) {
+    var color = s.type.includes('Export') ? 'var(--gold)' : 'var(--green)';
+    return '<div class="list-item">'
+      + '<div class="dot" style="background:'+color+';margin-top:4px"></div>'
+      + '<div style="flex:1">'
+      + '<div style="font-size:12px;font-weight:500;color:var(--text)">'+s.type+' — '+s.detail+'</div>'
+      + '<div style="font-size:10px;color:var(--text3);font-family:DM Mono,monospace;margin-top:2px">'+s.time+'</div>'
+      + '</div></div>';
+  }).join('');
+  var lastEl = document.getElementById('last-sync-time');
+  if (lastEl && syncHistory.length) lastEl.textContent = syncHistory[0].time;
+}
+
+function clearSyncHistory() {
+  syncHistory = [];
+  save('sync_history', syncHistory);
+  renderSyncHistory();
+}
+
+
+// ── SYNC STATUS ──
+function updateSyncStatus(status, color) {
+  var el = document.getElementById('sync-status');
+  if (el) {
+    var icons = { connected:'&#9679;', syncing:'&#8635;', offline:'&#9675;', error:'&#9888;' };
+    el.innerHTML = (icons[status] || '&#9679;') + ' ' + color;
+    el.style.color = status === 'connected' ? 'var(--green)' : status === 'syncing' ? 'var(--gold)' : 'var(--text3)';
+  }
+}
+
+function initApp() {
+  // Re-read from localStorage (may have been updated by Firebase sync)
+  applications = load('apps', []);
+  pomoSessions = load('pomo_sessions', []);
+  dsaProblems = load('dsa_problems', []);
+  notes = load('notes', []);
+  books = load('books', []);
+  syncHistory = load('sync_history', []);
+  dcState = load('dc_state_' + new Date().toDateString(), {});
+
+  renderApplications();
+  renderDSALog();
+  renderCards('all');
+  renderPomoLog();
+  updatePomoDots();
+  renderNotes(notes);
+  renderBooks();
+  renderDC();
+  updateSyncStats();
+  renderSyncHistory();
+
+  var today = new Date().toISOString().split('T')[0];
+  var appDate = document.getElementById('app-date');
+  if (appDate) appDate.value = today;
+
+  updateSyncStatus('connected', 'Synced to cloud');
+}
+
+// ── INIT ──
+document.addEventListener('DOMContentLoaded', function() {
+  updateSyncStatus('syncing', 'Connecting...');
+
+  function startApp() {
+    updateSyncStatus('syncing', 'Syncing data...');
+    syncFromFirebase(function() {
+      initApp();
+      updateSyncStatus('connected', 'Synced &#10003;');
+      showToast('☁ Data synced from cloud!');
+    });
+  }
+
+  if (window._firebaseReady) {
+    startApp();
+  } else {
+    // Wait for Firebase to initialize
+    window.addEventListener('firebase-ready', startApp);
+    // Fallback after 4 seconds if Firebase fails
+    setTimeout(function() {
+      if (!window._firebaseReady) {
+        initApp();
+        updateSyncStatus('offline', 'Offline mode');
+      }
+    }, 4000);
+  }
+});
+</script>
+</body>
+</html>
