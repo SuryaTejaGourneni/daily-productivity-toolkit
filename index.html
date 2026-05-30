@@ -167,6 +167,574 @@ textarea{min-height:100px}
   .stat-row{grid-template-columns:1fr 1fr}
   .job-row{grid-template-columns:1fr 1fr auto}
 }
+
+/* ── SKILL PLANNER SCOPED STYLES ── */
+#page-skills {
+  --sp-bg: #0f0f11; --sp-surface: #16161a; --sp-surface2: #1e1e24;
+  --sp-surface3: #252530; --sp-border: #2a2a35; --sp-border2: #353545;
+  --sp-text: #e8e8f0; --sp-muted: #888899; --sp-faint: #444455;
+  --sp-accent: #7c6ff7; --sp-accent2: #5b52cc;
+  --sp-accent-glow: rgba(124,111,247,0.15);
+  --sp-green: #3ecf8e; --sp-green-bg: rgba(62,207,142,0.1);
+  --sp-amber: #f5a623; --sp-amber-bg: rgba(245,166,35,0.1);
+  --sp-blue: #4ea8de; --sp-blue-bg: rgba(78,168,222,0.1);
+  --sp-red: #f26b6b; --sp-red-bg: rgba(242,107,107,0.1);
+  background: var(--sp-bg);
+  min-height: calc(100vh - 64px);
+  padding: 0 !important;
+}
+
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  #page-skills-vars {
+    --bg: #0f0f11;
+    --surface: #16161a;
+    --surface2: #1e1e24;
+    --surface3: #252530;
+    --border: #2a2a35;
+    --border2: #353545;
+    --text: #e8e8f0;
+    --muted: #888899;
+    --faint: #444455;
+    --accent: #7c6ff7;
+    --accent2: #5b52cc;
+    --accent-glow: rgba(124,111,247,0.15);
+    --green: #3ecf8e;
+    --green-bg: rgba(62,207,142,0.1);
+    --amber: #f5a623;
+    --amber-bg: rgba(245,166,35,0.1);
+    --blue: #4ea8de;
+    --blue-bg: rgba(78,168,222,0.1);
+    --red: #f26b6b;
+    --red-bg: rgba(242,107,107,0.1);
+    --font: 'DM Sans', sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+    --r: 10px;
+    --r-sm: 6px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  #page-skills .sp-body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--sp-bg);
+    color: var(--sp-text);
+    min-height: 100vh;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ── Layout ── */
+  .app { display: flex; height: 100vh; overflow: hidden; }
+
+  .sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    background: var(--sp-surface);
+    border-right: 1px solid var(--sp-border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .main {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Sidebar ── */
+  .sidebar-header {
+    padding: 20px 16px 14px;
+    border-bottom: 1px solid var(--sp-border);
+  }
+  .sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+  .logo-icon {
+    width: 32px; height: 32px;
+    background: var(--sp-accent);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .logo-text { font-size: 13px; font-weight: 600; color: var(--sp-text); letter-spacing: -0.2px; }
+  .logo-sub { font-size: 11px; color: var(--sp-muted); font-family: 'IBM Plex Mono', monospace; }
+
+  .sidebar-section { padding: 10px 8px 4px; }
+  .sidebar-section-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--sp-faint);
+    padding: 0 8px;
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--sp-muted);
+    transition: all 0.15s;
+    border: 1px solid transparent;
+    position: relative;
+  }
+  .nav-item:hover { background: var(--sp-surface2); color: var(--sp-text); }
+  .nav-item.active { background: var(--sp-accent-glow); color: var(--sp-accent); border-color: rgba(124,111,247,0.2); }
+  .nav-item .nav-icon { font-size: 15px; flex-shrink: 0; }
+  .nav-badge {
+    margin-left: auto;
+    font-size: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    background: var(--sp-surface3);
+    color: var(--sp-muted);
+    padding: 1px 6px;
+    border-radius: 99px;
+  }
+  .nav-item.active .nav-badge { background: rgba(124,111,247,0.2); color: var(--sp-accent); }
+
+  .sidebar-stats {
+    margin-top: auto;
+    border-top: 1px solid var(--sp-border);
+    padding: 12px 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .stat-mini { text-align: center; }
+  .stat-mini-n { font-size: 18px; font-weight: 600; color: var(--sp-text); font-family: 'IBM Plex Mono', monospace; }
+  .stat-mini-l { font-size: 10px; color: var(--sp-muted); }
+
+  /* ── Main header ── */
+  .main-header {
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid var(--sp-border);
+    background: var(--sp-surface);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+  .main-title { font-size: 17px; font-weight: 600; flex: 1; }
+  .main-sub { font-size: 12px; color: var(--sp-muted); }
+  .btn {
+    padding: 7px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--sp-border2);
+    background: transparent;
+    color: var(--sp-text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn:hover { background: var(--sp-surface2); border-color: var(--sp-border2); }
+  .btn-accent {
+    background: var(--sp-accent);
+    border-color: var(--sp-accent);
+    color: #fff;
+    font-weight: 500;
+  }
+  .btn-accent:hover { background: var(--sp-accent2); border-color: var(--sp-accent2); }
+
+  /* ── Content views ── */
+  .view { display: none; padding: 20px 24px; flex: 1; }
+  .view.active { display: block; }
+
+  /* ── Dashboard ── */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .stat-card {
+    background: var(--sp-surface);
+    border: 1px solid var(--sp-border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .stat-label { font-size: 11px; color: var(--sp-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .stat-value { font-size: 28px; font-weight: 600; font-family: 'IBM Plex Mono', monospace; color: var(--sp-text); }
+  .stat-value.green { color: var(--sp-green); }
+  .stat-value.amber { color: var(--sp-amber); }
+  .stat-value.accent { color: var(--sp-accent); }
+
+  .section-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--sp-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+  }
+
+  /* Progress bar */
+  .progress-row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+  .progress-label { font-size: 13px; color: var(--sp-text); width: 160px; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .progress-track { flex: 1; height: 6px; background: var(--sp-surface3); border-radius: 99px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--sp-accent); border-radius: 99px; transition: width 0.4s ease; }
+  .progress-pct { font-size: 11px; font-family: 'IBM Plex Mono', monospace; color: var(--sp-muted); width: 36px; text-align: right; flex-shrink: 0; }
+
+  /* ── Plans list ── */
+  .plan-card {
+    background: var(--sp-surface);
+    border: 1px solid var(--sp-border);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .plan-card:hover { border-color: var(--sp-border2); }
+  .plan-card.open { border-color: var(--sp-accent); }
+  .plan-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+  }
+  .plan-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: 13px;
+  }
+  .plan-meta { flex: 1; min-width: 0; }
+  .plan-name { font-size: 14px; font-weight: 500; color: var(--sp-text); }
+  .plan-detail { font-size: 12px; color: var(--sp-muted); margin-top: 1px; }
+  .tag {
+    font-size: 11px;
+    padding: 3px 9px;
+    border-radius: 99px;
+    flex-shrink: 0;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .tag-green { background: var(--sp-green-bg); color: var(--sp-green); }
+  .tag-amber { background: var(--sp-amber-bg); color: var(--sp-amber); }
+  .tag-blue { background: var(--sp-blue-bg); color: var(--sp-blue); }
+  .tag-accent { background: var(--sp-accent-glow); color: var(--sp-accent); }
+  .plan-chevron { font-size: 14px; color: var(--sp-faint); transition: transform 0.2s; flex-shrink: 0; }
+  .plan-card.open .plan-chevron { transform: rotate(90deg); }
+
+  /* Inline progress */
+  .plan-progress { margin: 0 16px; margin-top: -4px; margin-bottom: 10px; }
+  .plan-prog-track { height: 3px; background: var(--sp-surface3); border-radius: 99px; overflow: hidden; }
+  .plan-prog-fill { height: 100%; background: var(--sp-accent); border-radius: 99px; transition: width 0.4s; }
+
+  /* Plan body */
+  .plan-#page-skills .sp-body { border-top: 1px solid var(--sp-border); padding: 16px; display: none; }
+  .plan-card.open .plan-#page-skills .sp-body { display: block; }
+
+  .sessions-list { display: flex; flex-direction: column; gap: 6px; }
+  .session-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: var(--sp-surface2);
+    border-radius: 6px;
+    border: 1px solid var(--sp-border);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .session-item:hover { border-color: var(--sp-border2); background: var(--sp-surface3); }
+  .session-item.done { opacity: 0.55; }
+  .sess-check {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    border: 1.5px solid var(--sp-faint);
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    color: transparent;
+    transition: all 0.15s;
+    cursor: pointer;
+  }
+  .session-item.done .sess-check { background: var(--sp-green); border-color: var(--sp-green); color: #fff; }
+  .sess-num { font-size: 11px; font-family: 'IBM Plex Mono', monospace; color: var(--sp-muted); flex-shrink: 0; width: 20px; }
+  .sess-name { flex: 1; font-size: 13px; color: var(--sp-text); }
+  .sess-type { font-size: 10px; font-family: 'IBM Plex Mono', monospace; color: var(--sp-muted); flex-shrink: 0; }
+  .sess-hrs { font-size: 11px; font-family: 'IBM Plex Mono', monospace; color: var(--sp-faint); flex-shrink: 0; }
+
+  /* ── Session detail modal ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--sp-surface);
+    border: 1px solid var(--sp-border2);
+    border-radius: 14px;
+    width: 100%;
+    max-width: 620px;
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+  .modal-header {
+    padding: 18px 20px 14px;
+    border-bottom: 1px solid var(--sp-border);
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .modal-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .modal-title-wrap { flex: 1; }
+  .modal-title { font-size: 16px; font-weight: 600; color: var(--sp-text); }
+  .modal-sub { font-size: 12px; color: var(--sp-muted); margin-top: 2px; }
+  .modal-close {
+    background: none; border: none; color: var(--sp-faint);
+    font-size: 20px; cursor: pointer; padding: 2px 6px;
+    border-radius: 4px;
+    transition: color 0.15s;
+  }
+  .modal-close:hover { color: var(--sp-text); }
+  .modal-#page-skills .sp-body { padding: 18px 20px; }
+
+  .modal-section { margin-bottom: 20px; }
+  .modal-section-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--sp-faint);
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  .topics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .topic-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    font-size: 13px;
+    color: var(--sp-text);
+    padding: 6px 10px;
+    background: var(--sp-surface2);
+    border-radius: 6px;
+    border: 1px solid var(--sp-border);
+  }
+  .topic-arrow { color: var(--sp-accent); flex-shrink: 0; margin-top: 2px; }
+
+  .resource-list { display: flex; flex-direction: column; gap: 6px; }
+  .resource-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 12px;
+    background: var(--sp-surface2);
+    border-radius: 6px;
+    border: 1px solid var(--sp-border);
+    font-size: 13px;
+    text-decoration: none;
+    color: var(--sp-text);
+    transition: border-color 0.15s;
+  }
+  .resource-item:hover { border-color: var(--sp-accent); }
+  .resource-icon { font-size: 14px; color: var(--sp-muted); flex-shrink: 0; }
+  .resource-text { flex: 1; }
+  .resource-text a { color: var(--sp-blue); text-decoration: none; }
+  .resource-text a:hover { text-decoration: underline; }
+  .resource-ext { font-size: 10px; color: var(--sp-faint); flex-shrink: 0; }
+
+  .review-list { display: flex; flex-direction: column; gap: 6px; }
+  .review-item {
+    display: flex;
+    gap: 10px;
+    padding: 9px 12px;
+    background: var(--sp-surface2);
+    border-radius: 6px;
+    border: 1px solid var(--sp-border);
+    font-size: 13px;
+    color: var(--sp-text);
+  }
+  .review-num {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--sp-surface3);
+    border: 1px solid var(--sp-border2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--sp-muted);
+    flex-shrink: 0;
+  }
+
+  .modal-footer {
+    padding: 14px 20px;
+    border-top: 1px solid var(--sp-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .modal-timer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 20px;
+    color: var(--sp-text);
+    font-weight: 500;
+  }
+  .timer-label { font-size: 11px; color: var(--sp-muted); font-family: 'DM Sans', sans-serif; }
+  .timer-active { color: var(--sp-green); }
+
+  /* ── New Plan form ── */
+  .form-card {
+    background: var(--sp-surface);
+    border: 1px solid var(--sp-border);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .form-title { font-size: 15px; font-weight: 600; margin-bottom: 16px; }
+  .form-row { margin-bottom: 14px; }
+  .form-label { font-size: 12px; color: var(--sp-muted); margin-bottom: 6px; font-weight: 500; }
+  .form-input {
+    width: 100%;
+    padding: 9px 12px;
+    background: var(--sp-surface2);
+    border: 1px solid var(--sp-border2);
+    border-radius: 6px;
+    color: var(--sp-text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus { border-color: var(--sp-accent); }
+  .form-input::placeholder { color: var(--sp-faint); }
+  select.form-input { cursor: pointer; }
+  .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+
+  .skill-tag-input { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .skill-tag {
+    display: flex; align-items: center; gap: 5px;
+    padding: 3px 10px;
+    background: var(--sp-accent-glow);
+    border: 1px solid rgba(124,111,247,0.25);
+    border-radius: 99px;
+    font-size: 12px;
+    color: var(--sp-accent);
+  }
+  .skill-tag-remove { cursor: pointer; font-size: 14px; line-height: 1; color: var(--sp-accent); opacity: 0.7; }
+  .skill-tag-remove:hover { opacity: 1; }
+  .add-skill-input {
+    border: none;
+    background: transparent;
+    color: var(--sp-text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    outline: none;
+    min-width: 120px;
+  }
+  .add-skill-input::placeholder { color: var(--sp-faint); }
+
+  .sessions-builder { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+  .session-build-item {
+    display: grid;
+    grid-template-columns: 28px 1fr auto auto;
+    gap: 8px;
+    align-items: center;
+    padding: 8px 10px;
+    background: var(--sp-surface2);
+    border: 1px solid var(--sp-border);
+    border-radius: 6px;
+  }
+  .sess-build-num { font-size: 11px; font-family: 'IBM Plex Mono', monospace; color: var(--sp-faint); text-align: center; }
+  .sess-build-remove {
+    background: none; border: none; color: var(--sp-faint);
+    cursor: pointer; font-size: 16px; padding: 0 4px;
+    transition: color 0.15s;
+  }
+  .sess-build-remove:hover { color: var(--sp-red); }
+
+  /* ── Skills inventory ── */
+  .skill-grid-view { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; }
+  .skill-inv-card {
+    background: var(--sp-surface);
+    border: 1px solid var(--sp-border);
+    border-radius: 6px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .skill-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .skill-inv-name { font-size: 13px; color: var(--sp-text); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .skill-inv-level { font-size: 10px; font-family: 'IBM Plex Mono', monospace; color: var(--sp-muted); flex-shrink: 0; }
+
+  /* ── Empty state ── */
+  .empty-state {
+    text-align: center;
+    padding: 48px 20px;
+    color: var(--sp-muted);
+  }
+  .empty-icon { font-size: 40px; margin-bottom: 12px; }
+  .empty-title { font-size: 16px; font-weight: 600; color: var(--sp-text); margin-bottom: 6px; }
+  .empty-sub { font-size: 13px; color: var(--sp-muted); }
+
+  /* ── Timer ring ── */
+  .timer-ring-wrap { position: relative; width: 36px; height: 36px; }
+  .timer-ring-wrap svg { transform: rotate(-90deg); }
+  .timer-ring-bg { fill: none; stroke: var(--sp-surface3); stroke-width: 3; }
+  .timer-ring-fg { fill: none; stroke: var(--sp-green); stroke-width: 3; stroke-linecap: round; transition: stroke-dashoffset 1s linear; }
+  .timer-center {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; font-family: 'IBM Plex Mono', monospace; color: var(--sp-muted);
+  }
+
+  /* ── Scrollbar ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--sp-surface); }
+  ::-webkit-scrollbar-thumb { background: var(--sp-surface3); border-radius: 3px; }
+
+  /* ── Responsive ── */
+  @media (max-width: 700px) {
+    .sidebar { width: 200px; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .topics-grid { grid-template-columns: 1fr; }
+    .form-row-2, .form-row-3 { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 520px) {
+    .sidebar { display: none; }
+    .main { width: 100%; }
+  }
+
 </style>
 
 <!-- Firebase SDK -->
@@ -240,6 +808,12 @@ textarea{min-height:100px}
   <div class="nav-section">Goals</div>
   <div class="nav-item" onclick="showPage('daily')">
     <span class="ni">✅</span> Daily Checklist
+  </div>
+
+  <div class="nav-section">Learning</div>
+  <div class="nav-item" onclick="showPage('skills')">
+    <span class="ni">🎯</span> Skill Planner
+    <span class="nav-badge">NEW</span>
   </div>
 
   <div class="nav-section">Sync</div>
@@ -892,6 +1466,334 @@ textarea{min-height:100px}
       </div>
     </div>
   </div>
+</div>
+
+
+<!-- ═══ SKILL LEARNING PLANNER ═══ -->
+<div class="page" id="page-skills">
+  <div style="display:flex;height:calc(100vh - 58px);overflow:hidden">
+    <div style="flex:1;overflow-y:auto">
+      
+
+    <!-- Header -->
+    <div class="main-header">
+      <div>
+        <div class="main-title" id="view-title">Dashboard</div>
+        <div class="main-sub" id="view-sub">Your learning at a glance</div>
+      </div>
+      <div id="header-actions">
+        <button class="btn btn-accent" onclick="setView('new-plan', document.querySelector('.nav-item:nth-child(3)'))">+ New Plan</button>
+      </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div class="view active" id="view-dashboard">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Active plans</div>
+          <div class="stat-value accent" id="d-plans">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Sessions done</div>
+          <div class="stat-value green" id="d-sessions">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Hours logged</div>
+          <div class="stat-value" id="d-hours">0h</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Skills tracked</div>
+          <div class="stat-value amber" id="d-skills">0</div>
+        </div>
+      </div>
+
+      <div class="section-title">Plan Progress</div>
+      <div id="d-progress-list">
+        <div class="empty-state">
+          <div class="empty-icon">📋</div>
+          <div class="empty-title">No plans yet</div>
+          <div class="empty-sub">Create your first learning plan to see progress here.</div>
+        </div>
+      </div>
+
+      <div style="margin-top:24px">
+        <div class="section-title">Recently Active</div>
+        <div id="d-recent-list">
+          <div style="color:var(--muted);font-size:13px">No recent activity.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PLANS LIST -->
+    <div class="view" id="view-plans">
+      <div id="plans-list-container">
+        <div class="empty-state">
+          <div class="empty-icon">🎯</div>
+          <div class="empty-title">No plans yet</div>
+          <div class="empty-sub">Hit "New Plan" to create your first structured learning plan.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEW PLAN -->
+    <div class="view" id="view-new-plan">
+      <div class="form-card">
+        <div class="form-title">Create a learning plan</div>
+
+        <div class="form-row">
+          <div class="form-label">Plan title</div>
+          <input id="np-title" class="form-input" placeholder="e.g. Kafka Deep Dive, MLOps Fundamentals…" />
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-row">
+            <div class="form-label">Category</div>
+            <select id="np-category" class="form-input">
+              <option value="backend">Backend / Java</option>
+              <option value="python">Python / Data</option>
+              <option value="cloud">Cloud / DevOps</option>
+              <option value="frontend">Frontend</option>
+              <option value="ml">ML / AI</option>
+              <option value="data-eng">Data Engineering</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-label">Total hours</div>
+            <input id="np-hours" class="form-input" type="number" min="1" max="200" placeholder="20" value="20" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-label">Skills this plan covers (press Enter or comma to add)</div>
+          <div class="form-input skill-tag-input" id="skill-tags-wrap">
+            <input id="skill-tag-input" class="add-skill-input" placeholder="e.g. Kafka, Schema Registry…" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-label">Goal / outcome</div>
+          <input id="np-goal" class="form-input" placeholder="What will you be able to do when done?" />
+        </div>
+      </div>
+
+      <div class="form-card">
+        <div class="form-title">Sessions <span style="font-size:12px;color:var(--muted);font-weight:400">(add one row per session)</span></div>
+        <div class="sessions-builder" id="sessions-builder"></div>
+        <button class="btn" onclick="addSessionRow()">+ Add session</button>
+      </div>
+
+      <div style="display:flex;gap:10px;justify-content:flex-end;margin-bottom:32px">
+        <button class="btn" onclick="setView('plans', document.querySelector('.nav-item:nth-child(2)'))">Cancel</button>
+        <button class="btn btn-accent" onclick="savePlan()">Save plan →</button>
+      </div>
+    </div>
+
+    <!-- SKILLS INVENTORY -->
+    <div class="view" id="view-skills">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap">
+        <input id="skill-search" class="form-input" style="max-width:260px" placeholder="Search skills…" oninput="renderSkills()" />
+        <select id="skill-filter" class="form-input" style="max-width:160px" onchange="renderSkills()">
+          <option value="all">All levels</option>
+          <option value="known">Known</option>
+          <option value="deepening">Needs deepening</option>
+          <option value="gap">Gap / learn</option>
+        </select>
+        <button class="btn btn-accent" onclick="openAddSkill()">+ Add skill</button>
+      </div>
+      <div class="skill-grid-view" id="skill-grid"></div>
+    </div>
+
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<!-- SESSION DETAIL MODAL -->
+<div class="modal-overlay" id="session-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-icon" id="modal-icon">📚</div>
+      <div class="modal-title-wrap">
+        <div class="modal-title" id="modal-title">Session title</div>
+        <div class="modal-sub" id="modal-sub">2 hours · Java</div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section" id="modal-topics-section">
+        <div class="modal-section-label">Core topics</div>
+        <div class="topics-grid" id="modal-topics"></div>
+      </div>
+      <div class="modal-section" id="modal-resources-section">
+        <div class="modal-section-label">Resources</div>
+        <div class="resource-list" id="modal-resources"></div>
+      </div>
+      <div class="modal-section" id="modal-review-section">
+        <div class="modal-section-label">15-min review — ask yourself</div>
+        <div class="review-list" id="modal-review"></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-label">Notes</div>
+        <textarea id="modal-notes" class="form-input" rows="3" placeholder="Your notes for this session…" style="resize:vertical"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="modal-timer">
+        <div class="timer-ring-wrap">
+          <svg width="36" height="36" viewBox="0 0 36 36">
+            <circle class="timer-ring-bg" cx="18" cy="18" r="15"/>
+            <circle class="timer-ring-fg" id="timer-ring" cx="18" cy="18" r="15"
+              stroke-dasharray="94.2" stroke-dashoffset="94.2"/>
+          </svg>
+          <div class="timer-center" id="timer-center">—</div>
+        </div>
+        <div>
+          <div id="timer-display">0:00</div>
+          <div class="timer-label">session timer</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="btn" id="timer-btn" onclick="toggleTimer()">▶ Start</button>
+        <button class="btn" onclick="markDoneFromModal()" id="modal-done-btn">Mark complete ✓</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADD SKILL MODAL -->
+<div class="modal-overlay" id="skill-modal">
+  <div class="modal" style="max-width:400px">
+    <div class="modal-header">
+      <div class="modal-title-wrap">
+        <div class="modal-title">Add skill to inventory</div>
+        <div class="modal-sub">Track your current level</div>
+      </div>
+      <button class="modal-close" onclick="closeSkillModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-label">Skill name</div>
+        <input id="new-skill-name" class="form-input" placeholder="e.g. Kafka Streams" />
+      </div>
+      <div class="form-row">
+        <div class="form-label">Category</div>
+        <select id="new-skill-cat" class="form-input">
+          <option>Languages</option>
+          <option>Backend Frameworks</option>
+          <option>Frontend</option>
+          <option>Data & Analytics</option>
+          <option>APIs & Integration</option>
+          <option>Databases</option>
+          <option>Cloud & DevOps</option>
+          <option>Testing</option>
+          <option>ML / AI</option>
+          <option>ERP / CRM / Domain</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-label">Level</div>
+        <select id="new-skill-level" class="form-input">
+          <option value="known">✅ I know this well</option>
+          <option value="deepening">🔵 Needs deepening</option>
+          <option value="gap">🟡 Gap — need to learn</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeSkillModal()">Cancel</button>
+      <button class="btn btn-accent" onclick="saveNewSkill()">Add skill</button>
+    </div>
+  
+    </div>
+  </div>
+  <div class="modal-overlay" id="session-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-icon" id="modal-icon">📚</div>
+      <div class="modal-title-wrap">
+        <div class="modal-title" id="modal-title">Session title</div>
+        <div class="modal-sub" id="modal-sub">2 hours · Java</div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section" id="modal-topics-section">
+        <div class="modal-section-label">Core topics</div>
+        <div class="topics-grid" id="modal-topics"></div>
+      </div>
+      <div class="modal-section" id="modal-resources-section">
+        <div class="modal-section-label">Resources</div>
+        <div class="resource-list" id="modal-resources"></div>
+      </div>
+      <div class="modal-section" id="modal-review-section">
+        <div class="modal-section-label">15-min review — ask yourself</div>
+        <div class="review-list" id="modal-review"></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-label">Notes</div>
+        <textarea id="modal-notes" class="form-input" rows="3" placeholder="Your notes for this session…" style="resize:vertical"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="modal-timer">
+        <div class="timer-ring-wrap">
+          <svg width="36" height="36" viewBox="0 0 36 36">
+            <circle class="timer-ring-bg" cx="18" cy="18" r="15"/>
+            <circle class="timer-ring-fg" id="timer-ring" cx="18" cy="18" r="15"
+              stroke-dasharray="94.2" stroke-dashoffset="94.2"/>
+          </svg>
+          <div class="timer-center" id="timer-center">—</div>
+        </div>
+        <div>
+          <div id="timer-display">0:00</div>
+          <div class="timer-label">session timer</div>
+        </div>
+      </div>
+<div class="modal-overlay" id="skill-modal">
+  <div class="modal" style="max-width:400px">
+    <div class="modal-header">
+      <div class="modal-title-wrap">
+        <div class="modal-title">Add skill to inventory</div>
+        <div class="modal-sub">Track your current level</div>
+      </div>
+      <button class="modal-close" onclick="closeSkillModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-label">Skill name</div>
+        <input id="new-skill-name" class="form-input" placeholder="e.g. Kafka Streams" />
+      </div>
+      <div class="form-row">
+        <div class="form-label">Category</div>
+        <select id="new-skill-cat" class="form-input">
+          <option>Languages</option>
+          <option>Backend Frameworks</option>
+          <option>Frontend</option>
+          <option>Data & Analytics</option>
+          <option>APIs & Integration</option>
+          <option>Databases</option>
+          <option>Cloud & DevOps</option>
+          <option>Testing</option>
+          <option>ML / AI</option>
+          <option>ERP / CRM / Domain</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-label">Level</div>
+        <select id="new-skill-level" class="form-input">
+          <option value="known">✅ I know this well</option>
+          <option value="deepening">🔵 Needs deepening</option>
+          <option value="gap">🟡 Gap — need to learn</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeSkillModal()">Cancel</button>
+      <button class="btn btn-accent" onclick="saveNewSkill()">Add skill</button>
+    </div>
+  </div>
+</div>
 </div>
 
 </div><!-- end .main -->
@@ -1974,6 +2876,599 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 4000);
   }
 });
+
+// ── SKILL PLANNER STORAGE HELPERS ──
+function spLoad(key, def) {
+  try { var v = localStorage.getItem('stk_'+key); return v ? JSON.parse(v) : def; } catch(e){ return def; }
+}
+function spSave(key, data) {
+  try { localStorage.setItem('stk_'+key, JSON.stringify(data)); } catch(e){}
+  if (window._firebaseReady && window._db) {
+    var db = window._db; var m = window._fsModules;
+    m.setDoc(m.doc(db, 'toolkit', key), { value: JSON.stringify(data), updated: Date.now() })
+      .catch(function(e){ console.warn('Firebase spSave failed:', e); });
+  }
+}
+
+
+// ─── Data ─────────────────────────────────────────────────
+
+const STORAGE_KEY = 'surya_skill_planner_v1';
+
+function spLoadAll() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || defaultData(); }
+  catch(e) { return defaultData(); }
+}
+function spSaveAll(data) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+function defaultData() {
+  return {
+    plans: [defaultPlan()],
+    skills: defaultSkills(),
+    sessionNotes: {},
+    completedSessions: {},
+    lastActivity: []
+  };
+}
+
+const CAT_META = {
+  backend:  { icon: '☕', color: '#4ea8de', bg: 'rgba(78,168,222,0.12)', label: 'Java / Backend' },
+  python:   { icon: '🐍', color: '#3ecf8e', bg: 'rgba(62,207,142,0.12)', label: 'Python / Data' },
+  cloud:    { icon: '☁️', color: '#7c6ff7', bg: 'rgba(124,111,247,0.12)', label: 'Cloud / DevOps' },
+  frontend: { icon: '⚛', color: '#f5a623', bg: 'rgba(245,166,35,0.12)', label: 'Frontend' },
+  ml:       { icon: '🤖', color: '#f26b6b', bg: 'rgba(242,107,107,0.12)', label: 'ML / AI' },
+  'data-eng':{ icon: '⚡', color: '#f5a623', bg: 'rgba(245,166,35,0.12)', label: 'Data Engineering' },
+  other:    { icon: '📘', color: '#888899', bg: 'rgba(136,136,153,0.12)', label: 'Other' }
+};
+
+function defaultPlan() {
+  return {
+    id: 'surya-default',
+    title: 'Java & Python 20-Hour Mastery',
+    category: 'backend',
+    totalHours: 20,
+    goal: 'Master the 20% of Java & Python that drives 80% of results',
+    skills: ['Java', 'Spring Boot', 'Python', 'Pandas', 'PySpark', 'Kafka', 'Docker', 'SQL', 'pytest', 'MLflow'],
+    createdAt: Date.now(),
+    sessions: [
+      { id:'s1', title:'Java core refresh — streams, lambdas, Optional', type:'Java', hours:2, topics:['Classes, generics, interfaces','ArrayList / HashMap / HashSet','Exception handling patterns','Java 8+: streams, lambdas, Optional'], resources:[{text:'Java OOP crash course — Bro Code',url:'https://www.youtube.com/watch?v=grEKMHGYyns'},{text:'Baeldung Java 8 Streams guide',url:'https://www.baeldung.com/java-8-streams'},{text:'Build: refactor old Spring class using streams + Optional',url:''}], review:['Chain filter().map().collect() from memory','Comparable vs Comparator — when to use each?','When does Optional beat a null check?'] },
+      { id:'s2', title:'Spring Boot deep dive — Security, JPA, Kafka', type:'Java', hours:2, topics:['Spring Security: JWT + OAuth2','Spring JPA lazy vs eager pitfalls','Spring JMS / Kafka integration','Custom @ControllerAdvice handlers'], resources:[{text:'Baeldung Spring Security OAuth2',url:'https://www.baeldung.com/spring-security-oauth'},{text:'Baeldung Spring Kafka guide',url:'https://www.baeldung.com/spring-kafka'},{text:'Build: secured REST API + Kafka producer/consumer',url:''}], review:['Explain JWT auth flow without notes','What triggers LazyInitializationException?','Produce and consume a Kafka message end-to-end'] },
+      { id:'s3', title:'Python data engineering — PySpark + Scikit-Learn pipelines', type:'Python', hours:2, topics:['PySpark window functions + partitioning','pandas-on-Spark for large datasets','Scikit-Learn Pipeline + ColumnTransformer','Anomaly detection: IsolationForest, DBSCAN'], resources:[{text:'PySpark official getting started',url:'https://spark.apache.org/docs/latest/api/python/'},{text:'Scikit-Learn Pipeline docs',url:'https://scikit-learn.org/stable/modules/pipeline.html'},{text:'Build: anomaly pipeline on public financial data',url:''}], review:['When PySpark vs Pandas?','Build a Scikit-Learn Pipeline: imputer + scaler + classifier','IsolationForest vs DBSCAN for anomalies'] },
+      { id:'s4', title:'Python async, type hints & FastAPI patterns', type:'Python', hours:2, topics:['Type hints + mypy enforcement','async/await with asyncio','Pydantic v2 models for validation','Dependency injection in FastAPI'], resources:[{text:'FastAPI async docs — official',url:'https://fastapi.tiangolo.com/async/'},{text:'Real Python type checking guide',url:'https://realpython.com/python-type-checking/'},{text:'Upgrade Churn API: Pydantic v2 + async endpoints',url:''}], review:['When does async speed things up vs hurt?','Write a Pydantic model for nested JSON from scratch','What does mypy catch that tests miss?'] },
+      { id:'s5', title:'SQL mastery — window functions & Snowflake tuning', type:'Data Eng', hours:2, topics:['RANK, DENSE_RANK, LAG/LEAD, NTILE','CTEs vs subqueries vs temp tables','Query execution plans + index strategy','Snowflake clustering + materialized views'], resources:[{text:'Mode Analytics window functions tutorial',url:'https://mode.com/sql-tutorial/sql-window-functions/'},{text:'Snowflake clustering keys docs',url:'https://docs.snowflake.com/en/user-guide/tables-clustering-keys'},{text:'Challenge: 5 window queries on NYC taxi public dataset',url:''}], review:['RANK vs DENSE_RANK vs ROW_NUMBER with example','When to materialize a CTE vs leave inline?','7-day rolling average without a library'] },
+      { id:'s6', title:'AWS & Azure — from user to practitioner', type:'Cloud', hours:2, topics:['AWS IAM, VPC, RDS vs DynamoDB','Azure Service Bus vs Event Hub','Terraform: write/plan/apply a real module','K8s: ingress, HPA, resource limits'], resources:[{text:'Terraform official learn platform',url:'https://learn.hashicorp.com/terraform'},{text:'Azure Service Bus — Microsoft Learn',url:'https://learn.microsoft.com/en-us/azure/service-bus-messaging/'},{text:'Build: Terraform module EC2 + S3 + IAM in one apply',url:''}], review:['Azure Service Bus vs Event Hub — key difference','Deploy container to K8s with HPA from scratch','Run terraform plan and explain the diff'] },
+      { id:'s7', title:'Kafka to production — streams, schemas, reliability', type:'Data Eng', hours:2, topics:['Kafka producer/consumer tuning: offsets, partitions','Schema Registry + Avro/Protobuf','Kafka Streams vs Flink for stateful processing','Dead-letter queues + retry patterns'], resources:[{text:'Apache Kafka crash course — TechWorld with Nana',url:'https://www.youtube.com/watch?v=ei_OALJr7Cs'},{text:'Confluent — Why Schema Registry matters',url:'https://www.confluent.io/blog/schema-registry-kafka-stream-processing-yes-virginia-you-really-need-one/'},{text:'Build: producer → Kafka → consumer → Postgres + DLQ',url:''}], review:['Consumer group lag — what it is and how to monitor','What happens if consumer crashes mid-commit?','Kafka Streams vs batch ETL — when to pick which?'] },
+      { id:'s8', title:'MLOps & model serving — MLflow + RAG basics', type:'ML/AI', hours:2, topics:['Model versioning with MLflow','FastAPI + Docker model serving','Feature stores concept (Feast basics)','LLM prompt chaining + RAG pipeline basics'], resources:[{text:'MLflow quickstart — official docs',url:'https://mlflow.org/docs/latest/quickstart.html'},{text:'Anthropic prompt engineering guide',url:'https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview'},{text:'Wrap Churn model in MLflow: track + register + serve',url:''}], review:['What does MLflow track that Git does not?','Feature store vs data warehouse — core difference','Build a 3-step LLM prompt chain for data analysis'] },
+      { id:'s9', title:'Microservices & system design — GraphQL, gRPC, Saga', type:'Java', hours:2, topics:['API gateway: rate limiting, routing, auth','Service mesh basics (sidecar pattern)','GraphQL vs REST vs gRPC — when each wins','Saga pattern for distributed transactions'], resources:[{text:'Microservices explained — ByteByteGo',url:'https://www.youtube.com/watch?v=sSm2dRarhPo'},{text:'GraphQL official learn guide',url:'https://graphql.org/learn/'},{text:'Design: Saga-pattern order flow across 3 microservices',url:''}], review:['Saga pattern vs 2-phase commit — key tradeoff','When gRPC over REST?','Design an API gateway in 5 min on whiteboard'] },
+      { id:'s10', title:'Testing, Redux & portfolio consolidation', type:'Mixed', hours:2, topics:['pytest fixtures, parametrize, mocking','Redux Toolkit vs Zustand — modern state mgmt','Salesforce REST API basics','RAG pipeline: embeddings → vector store → retrieval'], resources:[{text:'pytest fixtures — official docs',url:'https://docs.pytest.org/en/stable/how-to/fixtures.html'},{text:'Redux Toolkit — getting started',url:'https://redux-toolkit.js.org/introduction/getting-started'},{text:'Add pytest coverage to ETL + 1 React+Redux component',url:''}], review:['Write parametrized pytest for 5 edge cases','useSelector vs useDispatch — what each does','Explain how RAG retrieves context for an LLM'] }
+    ]
+  };
+}
+
+function defaultSkills() {
+  const raw = [
+    ['Java','Languages','known'],['Python','Languages','known'],['JavaScript','Languages','known'],
+    ['TypeScript','Languages','deepening'],['SQL / PL/SQL','Languages','known'],['Scala','Languages','deepening'],
+    ['Unix/Linux Shell','Languages','known'],['Groovy','Languages','deepening'],
+    ['Spring Boot','Backend Frameworks','known'],['Spring MVC','Backend Frameworks','known'],
+    ['Spring Security','Backend Frameworks','deepening'],['Spring JMS','Backend Frameworks','deepening'],
+    ['Hibernate / JPA','Backend Frameworks','deepening'],['JAX-RS','Backend Frameworks','deepening'],
+    ['FastAPI','Backend Frameworks','known'],['Flask','Backend Frameworks','known'],
+    ['React.js','Frontend','deepening'],['Angular.js','Frontend','deepening'],
+    ['HTML5 / CSS3','Frontend','known'],['Redux','Frontend','gap'],
+    ['Pandas','Data & Analytics','known'],['NumPy','Data & Analytics','known'],
+    ['PySpark / Spark SQL','Data & Analytics','deepening'],['Scikit-Learn','Data & Analytics','known'],
+    ['Plotly / Dash / Streamlit','Data & Analytics','known'],['TensorFlow / PyTorch','Data & Analytics','gap'],
+    ['Anomaly detection','Data & Analytics','deepening'],['Time-series modeling','Data & Analytics','deepening'],
+    ['REST API design','APIs & Integration','known'],['GraphQL','APIs & Integration','gap'],
+    ['SOAP / WSDL','APIs & Integration','deepening'],['Apache Kafka','APIs & Integration','deepening'],
+    ['Swagger / OpenAPI','APIs & Integration','deepening'],['gRPC','APIs & Integration','gap'],
+    ['Oracle / SQL Server','Databases','known'],['MySQL / PostgreSQL','Databases','known'],
+    ['MongoDB','Databases','deepening'],['Snowflake','Databases','deepening'],
+    ['Cassandra','Databases','deepening'],['Redis','Databases','gap'],
+    ['AWS (EC2, S3)','Cloud & DevOps','deepening'],['Microsoft Azure','Cloud & DevOps','deepening'],
+    ['Docker','Cloud & DevOps','deepening'],['Kubernetes','Cloud & DevOps','deepening'],
+    ['Jenkins / CI/CD','Cloud & DevOps','deepening'],['Terraform','Cloud & DevOps','gap'],
+    ['Splunk / Grafana','Cloud & DevOps','deepening'],
+    ['JUnit / Mockito','Testing','deepening'],['pytest','Testing','gap'],
+    ['Selenium','Testing','deepening'],['TDD / BDD','Testing','deepening'],
+    ['MLflow / MLOps','ML / AI','gap'],['LLM prompt engineering','ML / AI','deepening'],
+    ['Vector DBs / RAG','ML / AI','gap'],['Deep learning (TF/PyTorch)','ML / AI','gap'],
+    ['Salesforce CRM','ERP / CRM / Domain','gap'],['Oracle ERP (R12)','ERP / CRM / Domain','deepening'],
+    ['Git / GitHub','Other','known'],['JIRA / Confluence','Other','known'],
+    ['Agile / Scrum','Other','known'],['Design patterns (GoF)','Other','deepening'],
+    ['Microservices arch','Other','deepening']
+  ];
+  return raw.map((r,i) => ({ id:'sk'+i, name:r[0], category:r[1], level:r[2] }));
+}
+
+// ─── State ────────────────────────────────────────────────
+
+let DB = spLoadAll();
+let currentModal = null;
+let timerInterval = null;
+let timerSeconds = 0;
+let timerRunning = false;
+let timerDuration = 7200;
+let skillTags = [];
+
+// ─── View routing ─────────────────────────────────────────
+
+const viewMeta = {
+  'dashboard': { title: 'Dashboard', sub: 'Your learning at a glance' },
+  'plans':     { title: 'My Plans', sub: 'All learning plans' },
+  'new-plan':  { title: 'New Plan', sub: 'Build a structured learning plan' },
+  'skills':    { title: 'Skills Inventory', sub: 'Track what you know and what to learn' }
+};
+
+function setView(name, navEl) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('view-' + name).classList.add('active');
+  if(navEl) navEl.classList.add('active');
+  const m = viewMeta[name] || {};
+  document.getElementById('view-title').textContent = m.title || name;
+  document.getElementById('view-sub').textContent = m.sub || '';
+  if(name === 'dashboard') renderDashboard();
+  if(name === 'plans') renderPlans();
+  if(name === 'skills') renderSkills();
+  if(name === 'new-plan') initNewPlan();
+}
+
+// ─── Dashboard ────────────────────────────────────────────
+
+function renderDashboard() {
+  const totalSessions = DB.plans.reduce((a,p) => a + p.sessions.length, 0);
+  const done = Object.keys(DB.completedSessions).length;
+  const hrs = Object.keys(DB.completedSessions).reduce((a,k) => {
+    const [pid, sid] = k.split('::');
+    const plan = DB.plans.find(p => p.id === pid);
+    if(!plan) return a;
+    const sess = plan.sessions.find(s => s.id === sid);
+    return a + (sess ? sess.hours : 0);
+  }, 0);
+
+  document.getElementById('d-plans').textContent = DB.plans.length;
+  document.getElementById('d-sessions').textContent = done;
+  document.getElementById('d-hours').textContent = hrs + 'h';
+  document.getElementById('d-skills').textContent = DB.skills.length;
+  document.getElementById('sb-sessions-done').textContent = done;
+  document.getElementById('sb-hours').textContent = hrs + 'h';
+  document.getElementById('plans-count').textContent = DB.plans.length;
+  document.getElementById('skills-count').textContent = DB.skills.length;
+
+  // Progress bars
+  const pl = document.getElementById('d-progress-list');
+  if(!DB.plans.length) {
+    pl.innerHTML = '<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">No plans yet</div><div class="empty-sub">Create your first learning plan.</div></div>';
+    return;
+  }
+  pl.innerHTML = DB.plans.map(plan => {
+    const total = plan.sessions.length;
+    const completed = plan.sessions.filter(s => DB.completedSessions[plan.id+'::'+s.id]).length;
+    const pct = total ? Math.round(completed/total*100) : 0;
+    return `<div class="progress-row" style="margin-bottom:12px">
+      <div class="progress-label" title="${plan.title}">${plan.title}</div>
+      <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+      <div class="progress-pct">${pct}%</div>
+    </div>`;
+  }).join('');
+
+  // Recent activity
+  const rl = document.getElementById('d-recent-list');
+  const recent = (DB.lastActivity || []).slice(-5).reverse();
+  if(!recent.length) { rl.innerHTML = '<div style="color:var(--muted);font-size:13px">No recent activity.</div>'; return; }
+  rl.innerHTML = recent.map(a => `
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)">
+      <span style="font-size:18px">${a.icon||'✓'}</span>
+      <div style="flex:1">
+        <div style="font-size:13px;color:var(--text)">${a.text}</div>
+        <div style="font-size:11px;color:var(--muted)">${formatAge(a.ts)}</div>
+      </div>
+    </div>`).join('');
+}
+
+function formatAge(ts) {
+  const d = Date.now() - ts;
+  if(d < 60000) return 'just now';
+  if(d < 3600000) return Math.floor(d/60000) + 'm ago';
+  if(d < 86400000) return Math.floor(d/3600000) + 'h ago';
+  return Math.floor(d/86400000) + 'd ago';
+}
+
+// ─── Plans ────────────────────────────────────────────────
+
+function renderPlans() {
+  const container = document.getElementById('plans-list-container');
+  if(!DB.plans.length) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-icon">🎯</div><div class="empty-title">No plans yet</div><div class="empty-sub">Hit "New Plan" to create your first plan.</div></div>';
+    return;
+  }
+  container.innerHTML = DB.plans.map(plan => renderPlanCard(plan)).join('');
+}
+
+function renderPlanCard(plan) {
+  const meta = CAT_META[plan.category] || CAT_META.other;
+  const total = plan.sessions.length;
+  const completed = plan.sessions.filter(s => DB.completedSessions[plan.id+'::'+s.id]).length;
+  const pct = total ? Math.round(completed/total*100) : 0;
+  const tag = pct === 100 ? '<span class="tag tag-green">Done ✓</span>' :
+              pct > 0 ? '<span class="tag tag-accent">In progress</span>' :
+              '<span class="tag tag-amber">Not started</span>';
+  return `
+  <div class="plan-card" id="card-${plan.id}">
+    <div class="plan-head" onclick="togglePlanCard('${plan.id}')">
+      <div class="plan-icon" style="background:${meta.bg};color:${meta.color}">${meta.icon}</div>
+      <div class="plan-meta">
+        <div class="plan-name">${plan.title}</div>
+        <div class="plan-detail">${total} sessions · ${plan.totalHours}h · ${meta.label}</div>
+      </div>
+      ${tag}
+      <button class="btn" style="font-size:11px;padding:4px 10px;flex-shrink:0" onclick="deletePlan(event,'${plan.id}')">✕</button>
+      <div class="plan-chevron">▶</div>
+    </div>
+    <div class="plan-progress">
+      <div class="plan-prog-track"><div class="plan-prog-fill" style="width:${pct}%"></div></div>
+    </div>
+    <div class="plan-body" id="body-${plan.id}">
+      ${plan.goal ? `<div style="font-size:13px;color:var(--muted);margin-bottom:12px">🎯 ${plan.goal}</div>` : ''}
+      ${plan.skills && plan.skills.length ? `<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px">${plan.skills.map(s=>`<span class="tag tag-accent">${s}</span>`).join('')}</div>` : ''}
+      <div class="sessions-list">
+        ${plan.sessions.map((sess,i) => renderSessionRow(plan.id, sess, i)).join('')}
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderSessionRow(planId, sess, idx) {
+  const key = planId + '::' + sess.id;
+  const done = !!DB.completedSessions[key];
+  const typeColors = { Java:'#4ea8de', Python:'#3ecf8e', 'Data Eng':'#f5a623', Cloud:'#7c6ff7', 'ML/AI':'#f26b6b', Mixed:'#888899' };
+  const col = typeColors[sess.type] || '#888899';
+  return `<div class="session-item ${done?'done':''}" id="sessrow-${key.replace('::','-')}">
+    <div class="sess-check" onclick="toggleSession(event,'${planId}','${sess.id}')">${done?'✓':''}</div>
+    <div class="sess-num">${String(idx+1).padStart(2,'0')}</div>
+    <div class="sess-name" onclick="openSession('${planId}','${sess.id}')">${sess.title}</div>
+    <div class="sess-type" style="color:${col}">${sess.type}</div>
+    <div class="sess-hrs">${sess.hours}h</div>
+  </div>`;
+}
+
+function togglePlanCard(id) {
+  const card = document.getElementById('card-' + id);
+  card.classList.toggle('open');
+}
+
+function deletePlan(e, id) {
+  e.stopPropagation();
+  if(!confirm('Delete this plan?')) return;
+  DB.plans = DB.plans.filter(p => p.id !== id);
+  save(DB);
+  renderPlans();
+  renderDashboard();
+}
+
+// ─── Session modal ────────────────────────────────────────
+
+let modalPlanId = null;
+let modalSessId = null;
+
+function openSession(planId, sessId) {
+  const plan = DB.plans.find(p => p.id === planId);
+  if(!plan) return;
+  const sess = plan.sessions.find(s => s.id === sessId);
+  if(!sess) return;
+
+  modalPlanId = planId;
+  modalSessId = sessId;
+
+  const meta = CAT_META[plan.category] || CAT_META.other;
+  document.getElementById('modal-icon').textContent = meta.icon;
+  document.getElementById('modal-icon').style.background = meta.bg;
+  document.getElementById('modal-title').textContent = sess.title;
+  document.getElementById('modal-sub').textContent = `${sess.hours} hours · ${sess.type} · ${plan.title}`;
+
+  // Topics
+  const topicsEl = document.getElementById('modal-topics');
+  if(sess.topics && sess.topics.length) {
+    document.getElementById('modal-topics-section').style.display = 'block';
+    topicsEl.innerHTML = sess.topics.map(t => `<div class="topic-item"><span class="topic-arrow">→</span>${t}</div>`).join('');
+  } else { document.getElementById('modal-topics-section').style.display = 'none'; }
+
+  // Resources
+  const resEl = document.getElementById('modal-resources');
+  if(sess.resources && sess.resources.length) {
+    document.getElementById('modal-resources-section').style.display = 'block';
+    resEl.innerHTML = sess.resources.map(r => `
+      <div class="resource-item">
+        <span class="resource-icon">${r.url ? '🔗' : '💡'}</span>
+        <div class="resource-text">${r.url ? `<a href="${r.url}" target="_blank">${r.text}</a>` : r.text}</div>
+        ${r.url ? '<span class="resource-ext">↗</span>' : ''}
+      </div>`).join('');
+  } else { document.getElementById('modal-resources-section').style.display = 'none'; }
+
+  // Review
+  const revEl = document.getElementById('modal-review');
+  if(sess.review && sess.review.length) {
+    document.getElementById('modal-review-section').style.display = 'block';
+    revEl.innerHTML = sess.review.map((q,i) => `<div class="review-item"><div class="review-num">${i+1}</div><div>${q}</div></div>`).join('');
+  } else { document.getElementById('modal-review-section').style.display = 'none'; }
+
+  // Notes
+  const key = planId + '::' + sessId;
+  document.getElementById('modal-notes').value = DB.sessionNotes[key] || '';
+
+  // Done state
+  const done = !!DB.completedSessions[key];
+  const doneBtn = document.getElementById('modal-done-btn');
+  doneBtn.textContent = done ? '✓ Completed' : 'Mark complete ✓';
+  doneBtn.style.background = done ? 'var(--green-bg)' : '';
+  doneBtn.style.borderColor = done ? 'var(--green)' : '';
+  doneBtn.style.color = done ? 'var(--green)' : '';
+
+  // Timer reset
+  resetTimer(sess.hours * 3600);
+
+  document.getElementById('session-modal').classList.add('open');
+}
+
+function closeModal() {
+  // Save notes
+  if(modalPlanId && modalSessId) {
+    const key = modalPlanId + '::' + modalSessId;
+    DB.sessionNotes[key] = document.getElementById('modal-notes').value;
+    save(DB);
+  }
+  stopTimer();
+  document.getElementById('session-modal').classList.remove('open');
+  modalPlanId = null; modalSessId = null;
+}
+
+function markDoneFromModal() {
+  if(!modalPlanId || !modalSessId) return;
+  toggleSession(null, modalPlanId, modalSessId);
+  const key = modalPlanId + '::' + modalSessId;
+  const done = !!DB.completedSessions[key];
+  const doneBtn = document.getElementById('modal-done-btn');
+  doneBtn.textContent = done ? '✓ Completed' : 'Mark complete ✓';
+  doneBtn.style.background = done ? 'var(--green-bg)' : '';
+  doneBtn.style.borderColor = done ? 'var(--green)' : '';
+  doneBtn.style.color = done ? 'var(--green)' : '';
+}
+
+function toggleSession(e, planId, sessId) {
+  if(e) e.stopPropagation();
+  const key = planId + '::' + sessId;
+  if(DB.completedSessions[key]) {
+    delete DB.completedSessions[key];
+  } else {
+    DB.completedSessions[key] = Date.now();
+    const plan = DB.plans.find(p => p.id === planId);
+    const sess = plan && plan.sessions.find(s => s.id === sessId);
+    DB.lastActivity = DB.lastActivity || [];
+    DB.lastActivity.push({ text: `Completed: ${sess ? sess.title : sessId}`, ts: Date.now(), icon: '✅' });
+    if(DB.lastActivity.length > 20) DB.lastActivity = DB.lastActivity.slice(-20);
+  }
+  save(DB);
+  // Re-render row
+  const rowId = 'sessrow-' + key.replace('::', '-');
+  const plan = DB.plans.find(p => p.id === planId);
+  const sess = plan && plan.sessions.find(s => s.id === sessId);
+  if(sess) {
+    const idx = plan.sessions.indexOf(sess);
+    const newRow = document.getElementById(rowId);
+    if(newRow) newRow.outerHTML = renderSessionRow(planId, sess, idx);
+  }
+  renderDashboard();
+}
+
+// ─── Timer ────────────────────────────────────────────────
+
+function resetTimer(duration) {
+  stopTimer();
+  timerSeconds = 0;
+  timerDuration = duration || 7200;
+  updateTimerDisplay();
+  document.getElementById('timer-btn').textContent = '▶ Start';
+}
+
+function toggleTimer() {
+  if(timerRunning) { stopTimer(); }
+  else { startTimer(); }
+}
+
+function startTimer() {
+  timerRunning = true;
+  document.getElementById('timer-btn').textContent = '⏸ Pause';
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimerDisplay();
+  }, 1000);
+}
+
+function stopTimer() {
+  timerRunning = false;
+  clearInterval(timerInterval);
+  document.getElementById('timer-btn').textContent = '▶ Start';
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(timerSeconds / 60);
+  const s = timerSeconds % 60;
+  document.getElementById('timer-display').textContent = m + ':' + String(s).padStart(2,'0');
+  const pct = Math.min(timerSeconds / timerDuration, 1);
+  const circumference = 94.2;
+  const offset = circumference - pct * circumference;
+  document.getElementById('timer-ring').style.strokeDashoffset = offset;
+  document.getElementById('timer-center').textContent = Math.floor(pct*100) + '%';
+}
+
+// ─── New plan ─────────────────────────────────────────────
+
+function initNewPlan() {
+  document.getElementById('np-title').value = '';
+  document.getElementById('np-hours').value = '20';
+  document.getElementById('np-goal').value = '';
+  skillTags = [];
+  renderSkillTags();
+  document.getElementById('sessions-builder').innerHTML = '';
+  addSessionRow();
+  addSessionRow();
+}
+
+function renderSkillTags() {
+  const wrap = document.getElementById('skill-tags-wrap');
+  const input = document.getElementById('skill-tag-input');
+  wrap.innerHTML = '';
+  skillTags.forEach((tag, i) => {
+    const el = document.createElement('span');
+    el.className = 'skill-tag';
+    el.innerHTML = tag + `<span class="skill-tag-remove" onclick="removeTag(${i})">×</span>`;
+    wrap.appendChild(el);
+  });
+  wrap.appendChild(input);
+  input.focus();
+}
+
+function removeTag(i) { skillTags.splice(i,1); renderSkillTags(); }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const si = document.getElementById('skill-tag-input');
+  if(si) {
+    si.addEventListener('keydown', e => {
+      if(e.key === 'Enter' || e.key === ',') {
+        e.preventDefault();
+        const v = si.value.replace(',','').trim();
+        if(v) { skillTags.push(v); si.value = ''; renderSkillTags(); }
+      } else if(e.key === 'Backspace' && !si.value && skillTags.length) {
+        skillTags.pop(); renderSkillTags();
+      }
+    });
+  }
+});
+
+let sessRowCount = 0;
+function addSessionRow() {
+  sessRowCount++;
+  const id = 'build-' + sessRowCount;
+  const row = document.createElement('div');
+  row.className = 'session-build-item';
+  row.id = id;
+  row.innerHTML = `
+    <div class="sess-build-num">${sessRowCount}</div>
+    <input class="form-input" placeholder="Session title…" id="${id}-title" />
+    <select class="form-input" id="${id}-type" style="width:110px">
+      <option>Java</option><option>Python</option><option>Data Eng</option>
+      <option>Cloud</option><option>ML/AI</option><option>Mixed</option>
+    </select>
+    <input class="form-input" type="number" min="1" max="8" value="2" id="${id}-hrs" style="width:60px" />
+    <button class="sess-build-remove" onclick="removeSessionRow('${id}')">×</button>`;
+  document.getElementById('sessions-builder').appendChild(row);
+}
+
+function removeSessionRow(id) {
+  const el = document.getElementById(id);
+  if(el) el.remove();
+}
+
+function savePlan() {
+  const title = document.getElementById('np-title').value.trim();
+  if(!title) { alert('Give your plan a title.'); return; }
+  const hours = parseInt(document.getElementById('np-hours').value) || 20;
+  const category = document.getElementById('np-category').value;
+  const goal = document.getElementById('np-goal').value.trim();
+
+  const rows = document.querySelectorAll('.session-build-item');
+  const sessions = [];
+  rows.forEach((row, i) => {
+    const t = row.querySelector('input[id$="-title"]').value.trim();
+    if(!t) return;
+    const type = row.querySelector('select').value;
+    const hrs = parseInt(row.querySelector('input[type="number"]').value) || 2;
+    sessions.push({ id:'s'+(Date.now()+i), title:t, type, hours:hrs, topics:[], resources:[], review:[] });
+  });
+
+  const plan = {
+    id: 'plan-' + Date.now(),
+    title, category, totalHours: hours, goal,
+    skills: [...skillTags],
+    sessions,
+    createdAt: Date.now()
+  };
+
+  DB.plans.unshift(plan);
+  DB.lastActivity = DB.lastActivity || [];
+  DB.lastActivity.push({ text: `Created plan: ${title}`, ts: Date.now(), icon: '📋' });
+  save(DB);
+
+  setView('plans', document.querySelectorAll('.nav-item')[1]);
+}
+
+// ─── Skills ───────────────────────────────────────────────
+
+const levelMeta = {
+  known:     { label:'Known', color:'var(--green)', dot:'#3ecf8e' },
+  deepening: { label:'Deepening', color:'var(--blue)', dot:'#4ea8de' },
+  gap:       { label:'Gap / learn', color:'var(--amber)', dot:'#f5a623' }
+};
+
+function renderSkills() {
+  const q = (document.getElementById('skill-search').value||'').toLowerCase();
+  const f = document.getElementById('skill-filter').value;
+  let skills = DB.skills;
+  if(q) skills = skills.filter(s => s.name.toLowerCase().includes(q) || s.category.toLowerCase().includes(q));
+  if(f !== 'all') skills = skills.filter(s => s.level === f);
+
+  const grid = document.getElementById('skill-grid');
+  if(!skills.length) {
+    grid.innerHTML = '<div style="color:var(--muted);font-size:13px">No skills match.</div>';
+    return;
+  }
+  grid.innerHTML = skills.map(s => {
+    const lm = levelMeta[s.level] || levelMeta.gap;
+    return `<div class="skill-inv-card">
+      <div class="skill-dot" style="background:${lm.dot}"></div>
+      <div class="skill-inv-name" title="${s.name}">${s.name}</div>
+      <div class="skill-inv-level" style="color:${lm.color}">${lm.label}</div>
+    </div>`;
+  }).join('');
+}
+
+function openAddSkill() {
+  document.getElementById('new-skill-name').value = '';
+  document.getElementById('skill-modal').classList.add('open');
+}
+function closeSkillModal() {
+  document.getElementById('skill-modal').classList.remove('open');
+}
+function saveNewSkill() {
+  const name = document.getElementById('new-skill-name').value.trim();
+  if(!name) return;
+  const cat = document.getElementById('new-skill-cat').value;
+  const level = document.getElementById('new-skill-level').value;
+  DB.skills.push({ id:'sk'+Date.now(), name, category:cat, level });
+  save(DB);
+  closeSkillModal();
+  renderSkills();
+  document.getElementById('skills-count').textContent = DB.skills.length;
+  document.getElementById('d-skills').textContent = DB.skills.length;
+}
+
+// ─── Click-outside to close modal ────────────────────────
+
+document.getElementById('session-modal').addEventListener('click', e => {
+  if(e.target === document.getElementById('session-modal')) closeModal();
+});
+document.getElementById('skill-modal').addEventListener('click', e => {
+  if(e.target === document.getElementById('skill-modal')) closeSkillModal();
+});
+
+// ─── Init ─────────────────────────────────────────────────
+
+renderDashboard();
+
 </script>
 </body>
 </html>
